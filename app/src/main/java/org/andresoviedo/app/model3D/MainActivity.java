@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
-import org.andresoviedo.app.model3D.view.MenuActivity;
 import org.andresoviedo.app.model3D.view.ModelActivity;
 import org.andresoviedo.dddmodel2.R;
 import org.andresoviedo.util.android.AndroidURLStreamHandlerFactory;
@@ -39,13 +38,12 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// Start Model activity.
-		MainActivity.this.startActivity(new Intent(MainActivity.this.getApplicationContext(), MenuActivity.class));
-		MainActivity.this.finish();
-	}
+//		MainActivity.this.startActivity(new Intent(MainActivity.this.getApplicationContext(), MenuActivity.class));
+		Intent demoIntent = new Intent(MainActivity.this.getApplicationContext(), ModelActivity.class);
+		demoIntent.putExtra("immersiveMode", "false");
+		demoIntent.putExtra("backgroundColor", "0 0 0 1");
+		MainActivity.this.startActivity(demoIntent);
 
-	@SuppressWarnings("unused")
-	private void init() {
-		MainActivity.this.startActivity(new Intent(MainActivity.this.getApplicationContext(), ModelActivity.class));
 		MainActivity.this.finish();
 	}
 
@@ -56,3 +54,25 @@ public class MainActivity extends Activity {
 		return true;
 	}
 }
+
+
+/**
+	TODO:
+
+ R!!!
+ private void loadModel() {
+ ContentUtils.showListDialog(this, "File Provider", new String[]{"Samples", "Repository",
+ "File Explorer", "Android Explorer"}, (DialogInterface dialog, int which) -> {
+ if (which == 0) {
+ loadModelFromAssets();
+ } else if (which == 1) {
+ loadModelFromRepository();
+ } else if (which == 2) {
+ loadModelFromSdCard();
+ } else {
+ loadModelFromContentProvider();
+ }
+ });
+
+ }
+ */

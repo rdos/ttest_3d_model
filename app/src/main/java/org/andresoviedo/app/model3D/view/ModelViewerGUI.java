@@ -58,7 +58,7 @@ final class ModelViewerGUI extends GUI {
     private void initFPS() {
         // frame-per-second
         fps = Text.allocate(7, 1);
-        fps.setId("fps");
+        fps.setId("FPS");
         fps.setVisible(true);
         fps.setParent(this);
         fps.setRelativeScale(new float[]{0.15f,0.15f,0.15f});

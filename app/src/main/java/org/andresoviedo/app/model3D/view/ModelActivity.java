@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.Loader;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,17 +30,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.EventObject;
 
-/**
- * This activity represents the container for our 3D viewer.
- *
- * @author andresoviedo
- */
 public class ModelActivity extends Activity implements EventListener {
 
     private static final int REQUEST_CODE_LOAD_TEXTURE = 1000;
     private static final int FULLSCREEN_DELAY = 10000;
 
     /**
+     *
      * Type of model if file name has no extension (provided though content provider)
      */
     private int paramType;
@@ -66,7 +61,8 @@ public class ModelActivity extends Activity implements EventListener {
 
 
     private Handler handler;
-    private CameraController cameraController;
+    //TODO: R!!!
+    private CameraController mCameraController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +143,9 @@ public class ModelActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CameraController...");
-            cameraController = new CameraController(scene.getCamera());
-            gLView.getModelRenderer().addListener(cameraController);
-            touchController.addListener(cameraController);
+            mCameraController = new CameraController(scene.getCamera());
+            gLView.getModelRenderer().addListener(mCameraController);
+            touchController.addListener(mCameraController);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading CameraController" + e.getMessage(), Toast.LENGTH_LONG).show();

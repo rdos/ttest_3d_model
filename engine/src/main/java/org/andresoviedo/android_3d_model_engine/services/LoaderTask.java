@@ -23,7 +23,7 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 	/**
 	 * Callback to notify of events
 	 */
-	private final LoadListener callback;
+	private final LoadListener mCallback;
 	/**
 	 * The dialog that will show the progress of the loading
 	 */
@@ -37,7 +37,7 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 	public LoaderTask(Activity parent, URI uri, LoadListener callback) {
 		this.uri = uri;
 		this.dialog = new ProgressDialog(parent);
-		this.callback = callback; }
+		mCallback = callback; }
 
 
 	@Override
@@ -54,12 +54,12 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 	@Override
 	protected List<Object3DData> doInBackground(Void... params) {
 		try {
-		    callback.onStart();
+		    mCallback.onStart();
 			List<Object3DData> data = build();
-            callback.onLoadComplete();
+            mCallback.onLoadComplete();
 			return  data;
 		} catch (Exception ex) {
-            callback.onLoadError(ex);
+            mCallback.onLoadError(ex);
 			return null;
 		}
 	}
@@ -67,7 +67,7 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 	protected abstract List<Object3DData> build() throws Exception;
 
 	public void onLoad(Object3DData data){
-		callback.onLoad(data);
+		mCallback.onLoad(data);
 	}
 
 	@Override
@@ -86,22 +86,22 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 
 	@Override
 	public void onStart() {
-		callback.onStart();
+		mCallback.onStart();
 	}
 
 	@Override
 	public void onProgress(String progress) {
 		super.publishProgress(progress);
-		callback.onProgress(progress);
+		mCallback.onProgress(progress);
 	}
 
 	@Override
 	public void onLoadError(Exception ex) {
-		callback.onLoadError(ex);
+		mCallback.onLoadError(ex);
 	}
 
 	@Override
 	public void onLoadComplete() {
-		callback.onLoadComplete();
+		mCallback.onLoadComplete();
 	}
 }
