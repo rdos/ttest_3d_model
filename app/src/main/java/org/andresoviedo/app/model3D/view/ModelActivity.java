@@ -31,6 +31,7 @@ import java.net.URI;
 import java.util.EventObject;
 
 public class ModelActivity extends Activity implements EventListener {
+    private ModelSurfaceView mGLView;
 
     private static final int REQUEST_CODE_LOAD_TEXTURE = 1000;
     private static final int FULLSCREEN_DELAY = 10000;
@@ -53,7 +54,6 @@ public class ModelActivity extends Activity implements EventListener {
      */
     private float[] backgroundColor = new float[]{0.0f, 0.0f, 0.0f, 1.0f};
 
-    private ModelSurfaceView mGLView;
     private TouchController touchController;
     private SceneLoader scene;
     private ModelViewerGUI gui;
