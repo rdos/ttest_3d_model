@@ -206,22 +206,22 @@ public class DemoLoaderTask extends LoaderTask {
 //                super.onLoad(obj112);
 //
 //            }
-            {
-                // more test to check right position
-                Object3DData obj111 = Cube.buildCubeV1();
-                obj111.setColor(new float[] { 1f, 1f, 0f, 0.25f });
-                obj111.setLocation(new float[] { -1f, -2f, 1f });
-                obj111.setScale(0.5f, 0.5f, 0.5f);
-                super.onLoad(obj111);
-
-                // more test to check right position
-                Object3DData obj112 = Cube.buildCubeV1();
-                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
-                obj112.setLocation(new float[] { 1f, -2f, 1f });
-                obj112.setScale(0.5f, 0.5f, 0.5f);
-                super.onLoad(obj112);
-
-            }
+//            {
+//                // more test to check right position
+//                Object3DData obj111 = Cube.buildCubeV1();
+//                obj111.setColor(new float[] { 1f, 1f, 0f, 0.25f });
+//                obj111.setLocation(new float[] { -1f, -2f, 1f });
+//                obj111.setScale(0.5f, 0.5f, 0.5f);
+//                super.onLoad(obj111);
+//
+//                // more test to check right position
+//                Object3DData obj112 = Cube.buildCubeV1();
+//                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
+//                obj112.setLocation(new float[] { 1f, -2f, 1f });
+//                obj112.setScale(0.5f, 0.5f, 0.5f);
+//                super.onLoad(obj112);
+//
+//            }
 
         } catch (Exception ex) {
             errors.add(ex);

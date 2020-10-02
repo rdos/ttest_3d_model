@@ -53,6 +53,7 @@ public class SceneLoader implements LoadListener, EventListener {
      * Camera position on Z axis
      */
     private static final float DEFAULT_CAMERA_POSITION = DEFAULT_MAX_MODEL_SIZE / 2 + 25;
+
     /**
      * Position 0f,0f,0f
      */

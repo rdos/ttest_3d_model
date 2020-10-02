@@ -53,7 +53,7 @@ public class ModelActivity extends Activity implements EventListener {
      */
     private float[] backgroundColor = new float[]{0.0f, 0.0f, 0.0f, 1.0f};
 
-    private ModelSurfaceView gLView;
+    private ModelSurfaceView mGLView;
     private TouchController touchController;
     private SceneLoader scene;
     private ModelViewerGUI gui;
@@ -97,7 +97,7 @@ public class ModelActivity extends Activity implements EventListener {
 
         // Create our 3D scenario
         Log.i("ModelActivity", "Loading Scene...");
-        scene = new SceneLoader(this, paramUri, paramType, gLView);
+        scene = new SceneLoader(this, paramUri, paramType, mGLView);
         if (paramUri == null) {
             final LoaderTask task = new DemoLoaderTask(this, null, scene);
             task.execute();
@@ -112,10 +112,13 @@ public class ModelActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading GLSurfaceView...");
-            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
-            gLView.addListener(this);
-            setContentView(gLView);
-            scene.setView(gLView);
+            setContentView(R.layout.activity_model);
+            mGLView = findViewById(R.id.id_glsurface_view)  ;
+            mGLView.setInitTODO(this, backgroundColor, this.scene);
+//            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
+            mGLView.addListener(this);
+
+            scene.setView(mGLView);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading OpenGL view:\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -132,7 +135,7 @@ public class ModelActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CollisionController...");
-            collisionController = new CollisionController(gLView, scene);
+            collisionController = new CollisionController(mGLView, scene);
             collisionController.addListener(scene);
             touchController.addListener(collisionController);
             touchController.addListener(scene);
@@ -144,7 +147,7 @@ public class ModelActivity extends Activity implements EventListener {
         try {
             Log.i("ModelActivity", "Loading CameraController...");
             mCameraController = new CameraController(scene.getCamera());
-            gLView.getModelRenderer().addListener(mCameraController);
+            mGLView.getModelRenderer().addListener(mCameraController);
             touchController.addListener(mCameraController);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
@@ -154,9 +157,9 @@ public class ModelActivity extends Activity implements EventListener {
         try {
             // TODO: finish UI implementation
             Log.i("ModelActivity", "Loading GUI...");
-            gui = new ModelViewerGUI(gLView, scene);
+            gui = new ModelViewerGUI(mGLView, scene);
             touchController.addListener(gui);
-            gLView.addListener(gui);
+            mGLView.addListener(gui);
             scene.addGUIObject(gui);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
@@ -356,7 +359,7 @@ public class ModelActivity extends Activity implements EventListener {
             ModelRenderer.ViewEvent viewEvent = (ModelRenderer.ViewEvent) event;
             if (viewEvent.getCode() == ModelRenderer.ViewEvent.Code.SURFACE_CHANGED) {
                 touchController.setSize(viewEvent.getWidth(), viewEvent.getHeight());
-                gLView.setTouchController(touchController);
+                mGLView.setTouchController(touchController);
 
                 // process event in GUI
                 if (gui != null) {

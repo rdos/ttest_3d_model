@@ -1,7 +1,9 @@
 package org.andresoviedo.android_3d_model_engine.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -23,14 +25,21 @@ import java.util.List;
  */
 public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 
-	private final ModelRenderer mRenderer;
+	private ModelRenderer mRenderer;
 
 	private TouchController touchController;
 
 	private final List<EventListener> listeners = new ArrayList<>();
 
-	public ModelSurfaceView(Activity parent, float[] backgroundColor, SceneLoader scene){
-		super(parent);
+	public ModelSurfaceView(Context context) {
+		super(context);
+	}
+
+	public ModelSurfaceView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	public void setInitTODO(Activity activity, float[] backgroundColor, SceneLoader scene) {
 		try{
 			Log.i("ModelSurfaceView","Loading [OpenGL 2] ModelSurfaceView...");
 
@@ -38,15 +47,16 @@ public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 			setEGLContextClientVersion(2);
 
 			// This is the actual renderer of the 3D space
-			mRenderer = new ModelRenderer(parent, this, backgroundColor, scene);
+			mRenderer = new ModelRenderer(activity, this, backgroundColor, scene);
 			mRenderer.addListener(this);
 			setRenderer(mRenderer);
 		}catch (Exception e){
 			Log.e("ModelActivity",e.getMessage(),e);
-			Toast.makeText(parent, "Error loading shaders:\n" +e.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, "Error loading shaders:\n" +e.getMessage(), Toast.LENGTH_LONG).show();
 			throw new RuntimeException(e);
 		}
 	}
+
 
 	public void setTouchController(TouchController touchController){
 		this.touchController = touchController;
@@ -116,4 +126,6 @@ public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 	public boolean isLightsEnabled() {
 		return mRenderer.isLightsEnabled();
 	}
+
+
 }
