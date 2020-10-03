@@ -67,7 +67,7 @@ public class Rescaler {
 
         // this.setOriginalScale(new float[]{scaleFactor,scaleFactor,scaleFactor});
 
-        // modify the model's vertices
+        // modify the menu_item_model's vertices
         if (object3DData instanceof AnimatedModel) {
             object3DData.setScale(new float[]{scaleFactor, scaleFactor, scaleFactor});
         } else {

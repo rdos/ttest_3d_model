@@ -23,7 +23,7 @@ public final class Normals {
      * Generate a new object that contains all the line normals for all the faces for the specified object
      *
      * @param obj the object to which we calculate the normals.
-     * @return the model with all the normal lines
+     * @return the menu_item_model with all the normal lines
      */
     public static Object3DData build(Object3DData obj) {
         if (obj.getDrawMode() != GLES20.GL_TRIANGLES) {

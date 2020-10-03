@@ -25,10 +25,10 @@ import java.util.List;
 public class DemoLoaderTask extends LoaderTask {
 
     /**
-     * Build a new progress dialog for loading the data model asynchronously
+     * Build a new progress dialog for loading the data menu_item_model asynchronously
      *
      * @param parent parent activity
-     * @param uri      the URL pointing to the 3d model
+     * @param uri      the URL pointing to the 3d menu_item_model
      * @param callback listener
      */
     public DemoLoaderTask(Activity parent, URI uri, LoadListener callback) {
@@ -70,7 +70,12 @@ public class DemoLoaderTask extends LoaderTask {
             obj12.setScale(0.5f, 0.5f, 0.5f);
 //            Rescaler.rescale(obj12, -10f);
             super.onLoad(obj12);
-//
+
+
+
+
+
+
 //            // test cube made of indices
 //            Object3DData obj20 = Cube.buildCubeV2();
 //            obj20.setColor(new float[] { 0f, 1f, 0, 0.25f });
@@ -124,7 +129,7 @@ public class DemoLoaderTask extends LoaderTask {
 //                errors.add(ex);
 //            }
 //
-            // test loading object with materials
+//            // test loading object with materials
 //            try {
 //                // this has color array
 //                Object3DData obj52 = new WavefrontLoader(GLES20.GL_TRIANGLE_FAN, new LoadListenerAdapter(){
@@ -141,8 +146,8 @@ public class DemoLoaderTask extends LoaderTask {
 //            } catch (Exception ex) {
 //                errors.add(ex);
 //            }
-
-            // test loading object made of polygonal faces
+//
+//            // test loading object made of polygonal faces
 //            try {
 //                // this has heterogeneous faces
 //                Object3DData obj53 = new WavefrontLoader(GLES20.GL_TRIANGLE_FAN, new LoadListenerAdapter(){
@@ -159,7 +164,7 @@ public class DemoLoaderTask extends LoaderTask {
 //            } catch (Exception ex) {
 //                errors.add(ex);
 //            }
-
+//
 //            // test loading object made of polygonal faces
 //            try {
 //                // this has heterogeneous faces
@@ -178,18 +183,18 @@ public class DemoLoaderTask extends LoaderTask {
 //            } catch (Exception ex) {
 //                errors.add(ex);
 //            }
-
-
-            // test loading object without normals
-                    /*try {
-                        Object3DData obj = Object3DBuilder.loadV5(parent, Uri.parse("assets://assets/models/cube4.obj"));
-                        obj.setPosition(new float[] { 0f, 2f, -2f });
-                        obj.setColor(new float[] { 0.3f, 0.52f, 1f, 1.0f });
-                        addObject(obj);
-                    } catch (Exception ex) {
-                        errors.add(ex);
-                    }*/
-
+//
+//
+//            // test loading object without normals
+//                    /*try {
+//                        Object3DData obj = Object3DBuilder.loadV5(parent, Uri.parse("assets://assets/models/cube4.obj"));
+//                        obj.setPosition(new float[] { 0f, 2f, -2f });
+//                        obj.setColor(new float[] { 0.3f, 0.52f, 1f, 1.0f });
+//                        addObject(obj);
+//                    } catch (Exception ex) {
+//                        errors.add(ex);
+//                    }*/
+//
 //            // more test to check right position
 //            {
 //                Object3DData obj111 = Cube.buildCubeV1();
@@ -206,22 +211,28 @@ public class DemoLoaderTask extends LoaderTask {
 //                super.onLoad(obj112);
 //
 //            }
-//            {
-//                // more test to check right position
-//                Object3DData obj111 = Cube.buildCubeV1();
-//                obj111.setColor(new float[] { 1f, 1f, 0f, 0.25f });
-//                obj111.setLocation(new float[] { -1f, -2f, 1f });
-//                obj111.setScale(0.5f, 0.5f, 0.5f);
-//                super.onLoad(obj111);
-//
-//                // more test to check right position
-//                Object3DData obj112 = Cube.buildCubeV1();
-//                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
-//                obj112.setLocation(new float[] { 1f, -2f, 1f });
-//                obj112.setScale(0.5f, 0.5f, 0.5f);
-//                super.onLoad(obj112);
-//
-//            }
+
+
+
+
+
+
+            {
+                // more test to check right position
+                Object3DData obj111 = Cube.buildCubeV1();
+                obj111.setColor(new float[] { 1f, 1f, 0f, 0.25f });
+                obj111.setLocation(new float[] { -1f, -2f, 1f });
+                obj111.setScale(0.5f, 0.5f, 0.5f);
+                super.onLoad(obj111);
+
+                // more test to check right position
+                Object3DData obj112 = Cube.buildCubeV1();
+                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
+                obj112.setLocation(new float[] { 1f, -2f, 1f });
+                obj112.setScale(0.5f, 0.5f, 0.5f);
+                super.onLoad(obj112);
+
+            }
 
         } catch (Exception ex) {
             errors.add(ex);

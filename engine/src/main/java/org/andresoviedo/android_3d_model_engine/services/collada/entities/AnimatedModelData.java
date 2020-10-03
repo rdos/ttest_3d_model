@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Contains the extracted data for an animated model, which includes the mesh data, and skeleton (joints heirarchy) data.
+ * Contains the extracted data for an animated menu_item_model, which includes the mesh data, and skeleton (joints heirarchy) data.
  * @author andresoviedo
  *
  */

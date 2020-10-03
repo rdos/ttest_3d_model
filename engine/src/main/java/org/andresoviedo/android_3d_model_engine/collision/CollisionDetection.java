@@ -23,8 +23,8 @@ public class CollisionDetection {
      * @param objects               the list of objects to test
      * @param height                viewport height
      * @param width                 viewport width
-     * @param modelViewMatrix       model view matrix
-     * @param modelProjectionMatrix model projection matrix
+     * @param modelViewMatrix       menu_item_model view matrix
+     * @param modelProjectionMatrix menu_item_model projection matrix
      * @param windowX               the window x coordinate
      * @param windowY               the window y coordinate
      * @return the nearest object intersected by the specified coordinates or null
@@ -131,8 +131,8 @@ public class CollisionDetection {
      *
      * @param height                viewport height
      * @param width                 viewport width
-     * @param modelViewMatrix       model view matrix
-     * @param modelProjectionMatrix model projection matrix
+     * @param modelViewMatrix       menu_item_model view matrix
+     * @param modelProjectionMatrix menu_item_model projection matrix
      * @param rx                    x point
      * @param ry                    y point
      * @param rz                    z point

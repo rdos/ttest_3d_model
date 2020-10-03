@@ -170,7 +170,7 @@ class GLES20Renderer implements Renderer {
             setUniform3(cameraPos,"u_cameraPos");
         }
 
-        // pass in joint transformation for animated model
+        // pass in joint transformation for animated menu_item_model
         int in_weightsHandle = -1;
         int in_jointIndicesHandle = -1;
         if (supportsJoints() && obj instanceof AnimatedModel) {

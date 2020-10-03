@@ -14,9 +14,9 @@ import java.nio.IntBuffer;
 public class Wireframe {
 
     /**
-     * Builds a wireframe of the model by drawing all lines (3) of the triangles.
+     * Builds a wireframe of the menu_item_model by drawing all lines (3) of the triangles.
      *
-     * @param objData the 3d model
+     * @param objData the 3d menu_item_model
      * @return the 3d wireframe using indices
      */
     public static Object3DData build(Object3DData objData) {

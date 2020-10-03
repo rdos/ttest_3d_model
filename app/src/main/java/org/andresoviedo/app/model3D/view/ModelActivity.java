@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +25,6 @@ import org.andresoviedo.dddmodel2.R;
 import org.andresoviedo.util.android.ContentUtils;
 import org.andresoviedo.util.event.EventListener;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.EventObject;
 
@@ -38,7 +36,7 @@ public class ModelActivity extends Activity implements EventListener {
 
     /**
      *
-     * Type of model if file name has no extension (provided though content provider)
+     * Type of menu_item_model if file name has no extension (provided though content provider)
      */
     private int paramType;
     /**
@@ -55,7 +53,7 @@ public class ModelActivity extends Activity implements EventListener {
     private float[] backgroundColor = new float[]{0.0f, 0.0f, 0.0f, 1.0f};
 
     private TouchController touchController;
-    private SceneLoader scene;
+    private SceneLoader mScene;
     private ModelViewerGUI gui;
     private CollisionController collisionController;
 
@@ -97,9 +95,9 @@ public class ModelActivity extends Activity implements EventListener {
 
         // Create our 3D scenario
         Log.i("ModelActivity", "Loading Scene...");
-        scene = new SceneLoader(this, paramUri, paramType, mGLView);
+        mScene = new SceneLoader(this, paramUri, paramType, mGLView);
         if (paramUri == null) {
-            final LoaderTask task = new DemoLoaderTask(this, null, scene);
+            final LoaderTask task = new DemoLoaderTask(this, null, mScene);
             task.execute();
         }
 
@@ -114,11 +112,11 @@ public class ModelActivity extends Activity implements EventListener {
             Log.i("ModelActivity", "Loading GLSurfaceView...");
             setContentView(R.layout.activity_model);
             mGLView = findViewById(R.id.id_glsurface_view)  ;
-            mGLView.setInitTODO(this, backgroundColor, this.scene);
+            mGLView.setInitTODO(this, backgroundColor, this.mScene);
 //            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
             mGLView.addListener(this);
 
-            scene.setView(mGLView);
+            mScene.setView(mGLView);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading OpenGL view:\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -135,10 +133,10 @@ public class ModelActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CollisionController...");
-            collisionController = new CollisionController(mGLView, scene);
-            collisionController.addListener(scene);
+            collisionController = new CollisionController(mGLView, mScene);
+            collisionController.addListener(mScene);
             touchController.addListener(collisionController);
-            touchController.addListener(scene);
+            touchController.addListener(mScene);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading CollisionController\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -146,7 +144,7 @@ public class ModelActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CameraController...");
-            mCameraController = new CameraController(scene.getCamera());
+            mCameraController = new CameraController(mScene.getCamera());
             mGLView.getModelRenderer().addListener(mCameraController);
             touchController.addListener(mCameraController);
         } catch (Exception e) {
@@ -157,10 +155,10 @@ public class ModelActivity extends Activity implements EventListener {
         try {
             // TODO: finish UI implementation
             Log.i("ModelActivity", "Loading GUI...");
-            gui = new ModelViewerGUI(mGLView, scene);
+            gui = new ModelViewerGUI(mGLView, mScene);
             touchController.addListener(gui);
             mGLView.addListener(gui);
-            scene.addGUIObject(gui);
+            mScene.addGUIObject(gui);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading GUI" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -171,9 +169,9 @@ public class ModelActivity extends Activity implements EventListener {
 
         setupOnSystemVisibilityChangeListener();
 
-        // load model
-        scene.init();
-
+        // load menu_item_model
+        mScene.init();
+        mScene.setLightOff();
         Log.i("ModelActivity", "Finished loading");
     }
 
@@ -190,7 +188,7 @@ public class ModelActivity extends Activity implements EventListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.model, menu);
+        getMenuInflater().inflate(R.menu.menu_item_model, menu);
         return true;
     }
 
@@ -221,50 +219,56 @@ public class ModelActivity extends Activity implements EventListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.model_toggle_wireframe:
-                scene.toggleWireframe();
+                mScene.toggleWireframe();
                 break;
             case R.id.model_toggle_boundingbox:
-                scene.toggleBoundingBox();
+                mScene.toggleBoundingBox();
                 break;
-            case R.id.model_toggle_textures:
-                scene.toggleTextures();
-                break;
-            case R.id.model_toggle_animation:
-                scene.toggleAnimation();
-                break;
-            case R.id.model_toggle_smooth:
-                scene.toggleSmooth();
-                break;
-            case R.id.model_toggle_collision:
-                scene.toggleCollision();
-                break;
-            case R.id.model_toggle_lights:
-                scene.toggleLighting();
-                break;
-            case R.id.model_toggle_stereoscopic:
-                scene.toggleStereoscopic();
-                break;
-            case R.id.model_toggle_blending:
-                scene.toggleBlending();
-                break;
-            case R.id.model_toggle_immersive:
-                toggleImmersive();
-                break;
-            case R.id.model_load_texture:
-                Intent target = ContentUtils.createGetContentIntent("image/*");
-                Intent intent = Intent.createChooser(target, "Select a file");
-                try {
-                    startActivityForResult(intent, REQUEST_CODE_LOAD_TEXTURE);
-                } catch (ActivityNotFoundException e) {
-                    // The reason for the existence of aFileChooser
-                }
-                break;
+//            case R.id.model_toggle_textures:
+//                mScene.toggleTextures();
+//                break;
+//            case R.id.model_toggle_animation:
+//                mScene.toggleAnimation();
+//                break;
+//            case R.id.model_toggle_smooth:
+//                mScene.toggleSmooth();
+//                break;
+//            case R.id.model_toggle_collision:
+//                mScene.toggleCollision();
+//                break;
+//            case R.id.model_toggle_lights:
+//                mScene.toggleLighting();
+//                break;
+
+
+//            case R.id.model_toggle_stereoscopic:
+//                mScene.toggleStereoscopic();
+//                break;
+
+
+            //TODO: R??? Toggle X-Ray :)
+//            case R.id.model_toggle_blending:
+//                mScene.toggleBlending();
+//                break;
+//            case R.id.model_toggle_immersive:
+//                toggleImmersive();
+//                break;
+//            case R.id.model_load_texture:
+//                Intent target = ContentUtils.createGetContentIntent("image/*");
+//                Intent intent = Intent.createChooser(target, "Select a file");
+//                try {
+//                    startActivityForResult(intent, REQUEST_CODE_LOAD_TEXTURE);
+//                } catch (ActivityNotFoundException e) {
+//                    // The reason for the existence of aFileChooser
+//                }
+//                break;
         }
 
         hideSystemUIDelayed();
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO: R??? full screen
     private void toggleImmersive() {
         this.immersiveMode = !this.immersiveMode;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -328,30 +332,6 @@ public class ModelActivity extends Activity implements EventListener {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_LOAD_TEXTURE:
-                // The URI of the selected file
-                final Uri uri = data.getData();
-                if (uri != null) {
-                    Log.i("ModelActivity", "Loading texture '" + uri + "'");
-                    try {
-                        ContentUtils.setThreadActivity(this);
-                        scene.loadTexture(null, uri);
-                    } catch (IOException ex) {
-                        Log.e("ModelActivity", "Error loading texture: " + ex.getMessage(), ex);
-                        Toast.makeText(this, "Error loading texture '" + uri + "'. " + ex
-                                .getMessage(), Toast.LENGTH_LONG).show();
-                    } finally {
-                        ContentUtils.setThreadActivity(null);
-                    }
-                }
-        }
-    }
 
     @Override
     public boolean onEvent(EventObject event) {

@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * The "animatedTransform" matrix is the joint transform that I keep referring
  * to in the tutorial. This is the transform that gets loaded up to the vertex
- * shader and is used to transform vertices. It is a model-space transform that
+ * shader and is used to transform vertices. It is a menu_item_model-space transform that
  * transforms the joint from it's bind (original position, no animation applied)
  * position to it's current position in the current pose. Changing this
  * transform changes the position/rotation of the joint in the animated entity.
@@ -29,7 +29,7 @@ import java.util.List;
  * <p>
  * The "bindLocalTransform" is the original (bind) transform of the joint
  * relative to its parent (in bone-space). The inverseBindTransform is that bind
- * transform in model-space, but inversed.
+ * transform in menu_item_model-space, but inversed.
  *
  * @author andresoviedo
  */
@@ -45,15 +45,15 @@ public class Joint {
 
     /**
      * This is called during set-up, after the joints hierarchy has been
-     * created. This calculates the model-space bind transform of this joint
+     * created. This calculates the menu_item_model-space bind transform of this joint
      * like so: </br>
      * </br>
      * {@code bindTransform = parentBindTransform * bindLocalTransform}</br>
      * </br>
-     * where "bindTransform" is the model-space bind transform of this joint,
-     * "parentBindTransform" is the model-space bind transform of the parent
+     * where "bindTransform" is the menu_item_model-space bind transform of this joint,
+     * "parentBindTransform" is the menu_item_model-space bind transform of the parent
      * joint, and "bindLocalTransform" is the bone-space bind transform of this
-     * joint. It then calculates and stores the inverse of this model-space bind
+     * joint. It then calculates and stores the inverse of this menu_item_model-space bind
      * transform, for use when calculating the final animation transform each
      * frame. It then recursively calls the method for all of the children
      * joints, so that they too calculate and store their inverse bind-pose
@@ -78,7 +78,7 @@ public class Joint {
      * Creates a new entity capable of animation. The inverse bind transform for
      * all joints is calculated in this constructor. The bind transform is
      * simply the original (no pose applied) transform of a joint in relation to
-     * the model's origin (model-space). The inverse bind transform is simply
+     * the menu_item_model's origin (menu_item_model-space). The inverse bind transform is simply
      * that but inverted.
      *
      * @param data
@@ -126,9 +126,9 @@ public class Joint {
      * The animated transform is the transform that gets loaded up to the shader
      * and is used to deform the vertices of the "skin". It represents the
      * transformation from the joint's bind position (original position in
-     * model-space) to the joint's desired animation pose (also in model-space).
-     * This matrix is calculated by taking the desired model-space transform of
-     * the joint and multiplying it by the inverse of the starting model-space
+     * menu_item_model-space) to the joint's desired animation pose (also in menu_item_model-space).
+     * This matrix is calculated by taking the desired menu_item_model-space transform of
+     * the joint and multiplying it by the inverse of the starting menu_item_model-space
      * transform of the joint.
      *
      * @return The transformation matrix of the joint which is used to deform
@@ -139,13 +139,13 @@ public class Joint {
     }
 
     /**
-     * This returns the inverted model-space bind transform. The bind transform
-     * is the original model-space transform of the joint (when no animation is
+     * This returns the inverted menu_item_model-space bind transform. The bind transform
+     * is the original menu_item_model-space transform of the joint (when no animation is
      * applied). This returns the inverse of that, which is used to calculate
      * the animated transform matrix which gets used to transform vertices in
      * the shader.
      *
-     * @return The inverse of the joint's bind transform (in model-space).
+     * @return The inverse of the joint's bind transform (in menu_item_model-space).
      */
     public float[] getInverseBindTransform() {
         return data.getInverseBindTransform();

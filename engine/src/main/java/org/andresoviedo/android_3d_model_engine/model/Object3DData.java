@@ -40,15 +40,15 @@ public class Object3DData {
      */
     protected Object3DData parent;
     /**
-     * model resource locator
+     * menu_item_model resource locator
      */
     private URI uri;
     /**
-     * model id
+     * menu_item_model id
      */
     private String id;
     /**
-     * model friendly name or joint name
+     * menu_item_model friendly name or joint name
      */
     private String name;
     /**
@@ -111,7 +111,7 @@ public class Object3DData {
      */
     private float[] bindTransform;
     /**
-     * This is the final model transformation
+     * This is the final menu_item_model transformation
      */
     private final float[] newModelMatrix = new float[16];
 

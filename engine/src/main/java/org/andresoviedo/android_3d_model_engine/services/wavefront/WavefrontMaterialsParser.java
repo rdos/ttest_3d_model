@@ -117,7 +117,7 @@ final class WavefrontMaterialsParser {
 
                 } else if (line.startsWith("illum ")) {
 
-                    // illumination model
+                    // illumination menu_item_model
                     Log.v("WavefrontMaterialsParse", "Ignored line: " + line);
 
                 } else if (line.charAt(0) == '#') { // comment line

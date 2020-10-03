@@ -39,6 +39,7 @@ public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 		super(context, attrs);
 	}
 
+	//TODO: R!!!
 	public void setInitTODO(Activity activity, float[] backgroundColor, SceneLoader scene) {
 		try{
 			Log.i("ModelSurfaceView","Loading [OpenGL 2] ModelSurfaceView...");
@@ -48,6 +49,7 @@ public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 
 			// This is the actual renderer of the 3D space
 			mRenderer = new ModelRenderer(activity, this, backgroundColor, scene);
+
 			mRenderer.addListener(this);
 			setRenderer(mRenderer);
 		}catch (Exception e){

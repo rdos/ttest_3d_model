@@ -10,14 +10,14 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * This component allows loading the model without blocking the UI.
+ * This component allows loading the menu_item_model without blocking the UI.
  *
  * @author andresoviedo
  */
 public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DData>> implements LoadListener {
 
 	/**
-	 * URL to the 3D model
+	 * URL to the 3D menu_item_model
 	 */
 	protected final URI uri;
 	/**
@@ -30,8 +30,8 @@ public abstract class LoaderTask extends AsyncTask<Void, String, List<Object3DDa
 	private final ProgressDialog dialog;
 
 	/**
-	 * Build a new progress dialog for loading the data model asynchronously
-     * @param uri        the URL pointing to the 3d model
+	 * Build a new progress dialog for loading the data menu_item_model asynchronously
+     * @param uri        the URL pointing to the 3d menu_item_model
      *
 	 */
 	public LoaderTask(Activity parent, URI uri, LoadListener callback) {

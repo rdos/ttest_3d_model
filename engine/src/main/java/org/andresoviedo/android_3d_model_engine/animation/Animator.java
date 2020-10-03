@@ -55,7 +55,7 @@ public class Animator {
 	 * This method should be called each frame to update the animation currently
 	 * being played. This increases the animation time (and loops it back to
 	 * zero if necessary), finds the pose that the entity should be in at that
-	 * time of the animation, and then applies that pose to all the model's
+	 * time of the animation, and then applies that pose to all the menu_item_model's
 	 * joints by setting the joint transforms.
 	 */
 	public void update(Object3DData obj, boolean bindPoseOnly) {
@@ -288,19 +288,19 @@ public class Animator {
 	 * This method applies the current pose to a given joint, and all of its
 	 * descendants. It does this by getting the desired local-transform for the
 	 * current joint, before applying it to the joint. Before applying the
-	 * transformations it needs to be converted from local-space to model-space
-	 * (so that they are relative to the model's origin, rather than relative to
+	 * transformations it needs to be converted from local-space to menu_item_model-space
+	 * (so that they are relative to the menu_item_model's origin, rather than relative to
 	 * the parent joint). This can be done by multiplying the local-transform of
-	 * the joint with the model-space transform of the parent joint.
+	 * the joint with the menu_item_model-space transform of the parent joint.
 	 *
 	 * The same thing is then done to all the child joints.
 	 *
 	 * Finally the inverse of the joint's bind transform is multiplied with the
-	 * model-space transform of the joint. This basically "subtracts" the
+	 * menu_item_model-space transform of the joint. This basically "subtracts" the
 	 * joint's original bind (no animation applied) transform from the desired
 	 * pose transform. The result of this is then the transform required to move
-	 * the joint from its original model-space transform to it's desired
-	 * model-space posed transform. This is the transform that needs to be
+	 * the joint from its original menu_item_model-space transform to it's desired
+	 * menu_item_model-space posed transform. This is the transform that needs to be
 	 * loaded up to the vertex shader and used to transform the vertices into
 	 * the current pose.
 	 *
@@ -311,7 +311,7 @@ public class Animator {
 	 * @param joint
 	 *            - the current joint which the pose should be applied to.
 	 * @param parentTransform
-	 *            - the desired model-space transform of the parent joint for
+	 *            - the desired menu_item_model-space transform of the parent joint for
 	 *            the pose.
 	 */
 	private void applyPoseToJoints(AnimatedModel animatedModel, Map<String,float[]> currentPose, Joint joint, float[]

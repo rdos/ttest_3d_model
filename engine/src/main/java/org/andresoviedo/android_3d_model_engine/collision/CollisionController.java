@@ -57,6 +57,7 @@ public class CollisionController implements EventListener {
                     // intersection point
                     Object3DData point3D = null;
 
+                    //TODO: R!!! красная точка ставится!!!
                     if (this.scene.isCollision()) {
 
                         Log.i("CollisionController", "Collision. Getting triangle intersection... " + objectHit.getId());

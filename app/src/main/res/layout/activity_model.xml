@@ -10,11 +10,23 @@
         android:layout_height="0dp"
         android:layout_weight="1">
     </org.andresoviedo.android_3d_model_engine.view.ModelSurfaceView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="?android:attr/listDivider" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AAAAAAAAAA"
         android:layout_gravity="center">
-
     </Button>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

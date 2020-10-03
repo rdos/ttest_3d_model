@@ -12,9 +12,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("android-3d-model-viewer.jks")
+            storeFile file("android-3d-menu_item_model-viewer.jks")
             storePassword ""
-            keyAlias "android-3d-model-viewer"
+            keyAlias "android-3d-menu_item_model-viewer"
             keyPassword ""
         }
     }

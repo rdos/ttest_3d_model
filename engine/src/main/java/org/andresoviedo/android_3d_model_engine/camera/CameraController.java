@@ -10,7 +10,7 @@ import org.andresoviedo.util.event.EventListener;
 import java.util.EventObject;
 
 public final class CameraController implements EventListener {
-
+    static private String TAG = "CameraController";
     private final Camera camera;
     private int width;
     private int height;
@@ -19,6 +19,7 @@ public final class CameraController implements EventListener {
         this.camera = camera;
     }
 
+    //TODO: R!??
     @Override
     public boolean onEvent(EventObject event) {
         if (event instanceof ModelRenderer.ViewEvent){
@@ -29,6 +30,7 @@ public final class CameraController implements EventListener {
             TouchEvent touchEvent = (TouchEvent) event;
             switch (touchEvent.getAction()){
                 case CLICK:
+                    Log.i(TAG, "RRR__CLICK: ");
                     break;
                 case MOVE:
                     float dx1 = touchEvent.getdX();

@@ -18,6 +18,7 @@ import org.andresoviedo.android_3d_model_engine.model.Object3DData;
 import org.andresoviedo.android_3d_model_engine.model.Transform;
 import org.andresoviedo.android_3d_model_engine.objects.Point;
 import org.andresoviedo.android_3d_model_engine.services.collada.ColladaLoaderTask;
+import org.andresoviedo.android_3d_model_engine.services.collada.entities.MeshData;
 import org.andresoviedo.android_3d_model_engine.services.stl.STLLoaderTask;
 import org.andresoviedo.android_3d_model_engine.services.wavefront.WavefrontLoaderTask;
 import org.andresoviedo.android_3d_model_engine.view.ModelSurfaceView;
@@ -131,17 +132,17 @@ public class SceneLoader implements LoadListener, EventListener {
     /**
      * Light toggle feature: we have 3 states: no light, light, light + rotation
      */
-    private boolean rotatingLight = true;
+    private boolean mRotatingLight = true;
     /**
      * Light toggle feature: whether to draw using lights
      */
-    private boolean drawLighting = true;
+    private boolean mDrawLighting = true;
     /**
-     * Animate model (dae only) or not
+     * Animate menu_item_model (dae only) or not
      */
     private boolean doAnimation = true;
     /**
-     * Animate model (dae only) or not
+     * Animate menu_item_model (dae only) or not
      */
     private boolean isSmooth = false;
     /**
@@ -181,16 +182,16 @@ public class SceneLoader implements LoadListener, EventListener {
      */
     private Animator animator = new Animator();
     /**
-     * Did the user touched the model for the first time?
+     * Did the user touched the menu_item_model for the first time?
      */
     private boolean userHasInteracted;
     /**
-     * time when model loading has started (for stats)
+     * time when menu_item_model loading has started (for stats)
      */
     private long startTime;
 
     /**
-     * A cache to save original model dimensions before rescaling them to fit in screen
+     * A cache to save original menu_item_model dimensions before rescaling them to fit in screen
      * This enables rescaling several times
      */
     private Map<Object3DData, Dimensions> originalDimensions = new HashMap<>();
@@ -213,7 +214,7 @@ public class SceneLoader implements LoadListener, EventListener {
             return;
         }
 
-        Log.i("SceneLoader", "Loading model " + uri + ". async and parallel..");
+        Log.i("SceneLoader", "Loading menu_item_model " + uri + ". async and parallel..");
         if (uri.toString().toLowerCase().endsWith(".obj") || type == 0) {
             new WavefrontLoaderTask(parent, uri, this).execute();
         } else if (uri.toString().toLowerCase().endsWith(".stl") || type == 1) {
@@ -271,7 +272,7 @@ public class SceneLoader implements LoadListener, EventListener {
     }
 
     private void animateLight() {
-        if (!rotatingLight) return;
+        if (!mRotatingLight) return;
 
         // animate light - Do a complete rotation every 5 seconds.
         long time = SystemClock.uptimeMillis() % 5000L;
@@ -320,9 +321,9 @@ public class SceneLoader implements LoadListener, EventListener {
     public final void toggleWireframe() {
 
         // info: to enable normals, just change module to 5
-        final int module = 4;
+        final int module = 5;
         this.drawwMode = (this.drawwMode + 1) % module;
-        this.drawNormals = false;
+        this.drawNormals = true;
         this.drawPoints = false;
         this.drawSkeleton = false;
         this.drawWireframe = false;
@@ -391,15 +392,15 @@ public class SceneLoader implements LoadListener, EventListener {
     }
 
     public final void toggleLighting() {
-        if (this.drawLighting && this.rotatingLight) {
-            this.rotatingLight = false;
+        if (mDrawLighting && mRotatingLight) {
+            mRotatingLight = false;
             makeToastText("Light stopped", Toast.LENGTH_SHORT);
-        } else if (this.drawLighting && !this.rotatingLight) {
-            this.drawLighting = false;
+        } else if (mDrawLighting && !mRotatingLight) {
+            mDrawLighting = false;
             makeToastText("Lights off", Toast.LENGTH_SHORT);
         } else {
-            this.drawLighting = true;
-            this.rotatingLight = true;
+            mDrawLighting = true;
+            mRotatingLight = true;
             makeToastText("Light on", Toast.LENGTH_SHORT);
         }
         requestRender();
@@ -418,14 +419,19 @@ public class SceneLoader implements LoadListener, EventListener {
         }
     }
 
+    //TODO: R!!! сломалось ;) починил :)))))
     public final void toggleSmooth() {
         for (int i = 0; i < getObjects().size(); i++) {
-            if (!this.isSmooth) {
-                getObjects().get(0).getMeshData().smooth();
-            } else {
-                getObjects().get(0).getMeshData().unSmooth();
+            MeshData meshData = getObjects().get(0).getMeshData();
+            if (meshData == null) {
+                return;
             }
-            getObjects().get(0).getMeshData().refreshNormalsBuffer();
+            if (!this.isSmooth) {
+                meshData.smooth();
+            } else {
+                meshData.unSmooth();
+            }
+            meshData.refreshNormalsBuffer();
         }
         this.isSmooth = !this.isSmooth;
     }
@@ -547,7 +553,7 @@ public class SceneLoader implements LoadListener, EventListener {
     }
 
     public final boolean isDrawLighting() {
-        return drawLighting;
+        return mDrawLighting;
     }
 
     public final boolean isDrawSkeleton() {
@@ -677,7 +683,7 @@ public class SceneLoader implements LoadListener, EventListener {
     @Override
     public void onLoadError(Exception ex) {
         Log.e("SceneLoader", ex.getMessage(), ex);
-        makeToastText("There was a problem building the model: " + ex.getMessage(), Toast.LENGTH_LONG);
+        makeToastText("There was a problem building the menu_item_model: " + ex.getMessage(), Toast.LENGTH_LONG);
         ContentUtils.setThreadActivity(null);
     }
 
@@ -703,9 +709,13 @@ public class SceneLoader implements LoadListener, EventListener {
     }
 
     public final boolean isRotatingLight() {
-        return rotatingLight;
+        return mRotatingLight;
     }
 
+    public final void setLightOff(){
+        mRotatingLight = false;
+        mDrawLighting = false;
+    }
     public void setView(ModelSurfaceView view) {
         this.glView = view;
     }
@@ -862,18 +872,18 @@ public class SceneLoader implements LoadListener, EventListener {
             float localScaleY = scaleFactor * original.getScale()[1];
             float localScaleZ = scaleFactor * original.getScale()[2];
             data.setScale(new float[]{localScaleX, localScaleY, localScaleZ});
-            Log.v("SceneLoader", "Mew model scale: " + Arrays.toString(data.getScale()));
+            Log.v("SceneLoader", "Mew menu_item_model scale: " + Arrays.toString(data.getScale()));
 
             // relocate
             float localTranlactionX = original.getLocation()[0] * scaleFactor;
             float localTranlactionY = original.getLocation()[1] * scaleFactor;
             float localTranlactionZ = original.getLocation()[2] * scaleFactor;
             data.setLocation(new float[]{localTranlactionX, localTranlactionY, localTranlactionZ});
-            Log.v("SceneLoader", "Mew model location: " + Arrays.toString(data.getLocation()));
+            Log.v("SceneLoader", "Mew menu_item_model location: " + Arrays.toString(data.getLocation()));
 
             // center
             data.translate(globalDifference);
-            Log.v("SceneLoader", "Mew model translated: " + Arrays.toString(data.getLocation()));
+            Log.v("SceneLoader", "Mew menu_item_model translated: " + Arrays.toString(data.getLocation()));
         }
 
 
