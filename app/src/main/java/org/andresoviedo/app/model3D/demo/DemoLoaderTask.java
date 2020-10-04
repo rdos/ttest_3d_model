@@ -63,17 +63,58 @@ public class DemoLoaderTask extends LoaderTask {
 //            obj11.setScale(0.5f, 0.5f, 0.5f);
 //            super.onLoad(obj11);
 
-            // test cube made of wires (I explode it to see the faces better)
-            Object3DData obj12 = Cube.buildCubeV1_with_normals();
-            obj12.setColor(new float[] { 1f, 0f, 1f, 1f });
-            obj12.setLocation(new float[] { 0f, 0f, -2f });
-            obj12.setScale(0.5f, 0.5f, 0.5f);
-//            Rescaler.rescale(obj12, -10f);
-            super.onLoad(obj12);
+//
+//            // test cube made of wires (I explode it to see the faces better)
+//            Object3DData obj12 = Cube.buildCubeV1_with_normals();
+//            obj12.setColor(new float[] { 1f, 0f, 1f, 1f });
+//            obj12.setLocation(new float[] { 0f, 0f, 0f });
+//            obj12.setScale(0.5f, 0.5f, 0.5f);
+////            Rescaler.rescale(obj12, -10f);
+//            super.onLoad(obj12);
 
+            float[] ColorCubeTZ = new float[] { 1f, 1f, 0f, 0.25f };
+            // more test to check right position
+            Object3DData obj111 = Cube.buildCubeV1();
+            obj111.setColor(ColorCubeTZ);
+            obj111.setLocation(new float[] { -0.5f, 0.5f, 0.5f });
+            obj111.setScale(0f, 0.5f, 0.5f);
+            super.onLoad(obj111);
 
+            // more test to check right position
+            Object3DData obj112 = Cube.buildCubeV1();
+            obj112.setColor(ColorCubeTZ);
+            obj112.setLocation(new float[] { -1f, 1f, 0.5f });
+            obj112.setScale(0.5f, 0f, 0.5f);
+            super.onLoad(obj112);
 
+            // more test to check right position
+            Object3DData obj113 = Cube.buildCubeV1();
+            obj113.setColor(ColorCubeTZ);
+            obj113.setLocation(new float[] { -1f, 0f, 0.5f });
+            obj113.setScale(0.5f, 0f, 0.5f);
+            super.onLoad(obj113);
 
+            // more test to check right position
+            Object3DData obj114 = Cube.buildCubeV1();
+            obj114.setColor(ColorCubeTZ);
+            obj114.setLocation(new float[] { -1.5f, 0.5f, 0.5f });
+            obj114.setScale(0f, 0.5f, 0.5f);
+            super.onLoad(obj114);
+
+//
+            // more test to check right position
+            Object3DData obj115 = Cube.buildCubeV1();
+            obj115.setColor(ColorCubeTZ);
+            obj115.setLocation(new float[] { -1f, 0.5f, 0f });
+            obj115.setScale(0.5f, 0.5f, 0f);
+            super.onLoad(obj115);
+
+            // more test to check right position
+            Object3DData obj116 = Cube.buildCubeV1();
+            obj116.setColor(ColorCubeTZ);
+            obj116.setLocation(new float[] { -1f, 0.5f, 1f });
+            obj116.setScale(0.5f, 0.5f, 0f);
+            super.onLoad(obj116);
 
 
 //            // test cube made of indices
@@ -218,20 +259,22 @@ public class DemoLoaderTask extends LoaderTask {
 
 
             {
-                // more test to check right position
-                Object3DData obj111 = Cube.buildCubeV1();
-                obj111.setColor(new float[] { 1f, 1f, 0f, 0.25f });
-                obj111.setLocation(new float[] { -1f, -2f, 1f });
-                obj111.setScale(0.5f, 0.5f, 0.5f);
-                super.onLoad(obj111);
 
-                // more test to check right position
-                Object3DData obj112 = Cube.buildCubeV1();
-                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
-                obj112.setLocation(new float[] { 1f, -2f, 1f });
-                obj112.setScale(0.5f, 0.5f, 0.5f);
-                super.onLoad(obj112);
 
+//                // more test to check right position
+//                Object3DData obj111 = Cube.buildCubeV1();
+//                obj111.setColor(new float[] { 0f, 0f, 0f, 0f });
+//                obj111.setLocation(new float[] { -1f, -2f, 1f });
+//                obj111.setScale(1.5f, 0.5f, 0.5f);
+//                super.onLoad(obj111);
+//
+//
+//                // more test to check right position
+//                Object3DData obj112 = Cube.buildCubeV1();
+//                obj112.setColor(new float[] { 0f, 1f, 1f, 0.25f });
+//                obj112.setLocation(new float[] { -1f, -2f, 1f });
+//                obj112.setScale(1.5f, 0.5f, 0.5f);
+//                super.onLoad(obj112);
             }
 
         } catch (Exception ex) {
