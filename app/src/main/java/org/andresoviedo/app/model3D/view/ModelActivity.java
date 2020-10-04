@@ -172,6 +172,7 @@ public class ModelActivity extends Activity implements EventListener {
         // load menu_item_model
         mScene.init();
         mScene.setLightOff();
+        
         Log.i("ModelActivity", "Finished loading");
     }
 
@@ -351,3 +352,22 @@ public class ModelActivity extends Activity implements EventListener {
         return true;
     }
 }
+
+/**
+ TODO:R!!!
+ private void loadModel() {
+ ContentUtils.showListDialog(this, "File Provider", new String[]{"Samples", "Repository",
+ "File Explorer", "Android Explorer"}, (DialogInterface dialog, int which) -> {
+ if (which == 0) {
+ loadModelFromAssets();
+ } else if (which == 1) {
+ loadModelFromRepository();
+ } else if (which == 2) {
+ loadModelFromSdCard();
+ } else {
+ loadModelFromContentProvider();
+ }
+ });
+
+ }
+ */

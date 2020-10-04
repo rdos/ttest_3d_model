@@ -419,7 +419,7 @@ public class SceneLoader implements LoadListener, EventListener {
         }
     }
 
-    //TODO: R!!! сломалось ;) починил :)))))
+    //TODO: сломалось ;)
     public final void toggleSmooth() {
         for (int i = 0; i < getObjects().size(); i++) {
             MeshData meshData = getObjects().get(0).getMeshData();
