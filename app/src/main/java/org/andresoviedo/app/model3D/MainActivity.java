@@ -1,9 +1,7 @@
-package org.andresoviedo.app.model3D.view;
+package org.andresoviedo.app.model3D;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,22 +19,30 @@ import org.andresoviedo.android_3d_model_engine.services.SceneLoader;
 import org.andresoviedo.android_3d_model_engine.view.ModelRenderer;
 import org.andresoviedo.android_3d_model_engine.view.ModelSurfaceView;
 import org.andresoviedo.app.model3D.demo.DemoLoaderTask;
+import org.andresoviedo.app.model3D.view.ModelViewerGUI;
 import org.andresoviedo.dddmodel2.R;
-import org.andresoviedo.util.android.ContentUtils;
+import org.andresoviedo.util.android.AndroidURLStreamHandlerFactory;
 import org.andresoviedo.util.event.EventListener;
 
 import java.net.URI;
+import java.net.URL;
 import java.util.EventObject;
 
-public class ModelActivity extends Activity implements EventListener {
+public class MainActivity extends Activity implements EventListener {
     private ModelSurfaceView mGLView;
 
     private static final int REQUEST_CODE_LOAD_TEXTURE = 1000;
     private static final int FULLSCREEN_DELAY = 10000;
 
+    // Custom handler: org/andresoviedo/util/android/assets/Handler.class
+    static {
+        System.setProperty("java.protocol.handler.pkgs", "org.andresoviedo.util.android");
+        URL.setURLStreamHandlerFactory(new AndroidURLStreamHandlerFactory());
+    }
+
     /**
      *
-     * Type of menu_item_model if file name has no extension (provided though content provider)
+     * Type of menu_item if file name has no extension (provided though content provider)
      */
     private int paramType;
     /**
@@ -50,7 +56,7 @@ public class ModelActivity extends Activity implements EventListener {
     /**
      * Background GL clear color. Default is light gray
      */
-    private float[] backgroundColor = new float[]{0.0f, 0.0f, 0.0f, 1.0f};
+    private float[] backgroundColor = new float[]{0.8f, 0.8f, 0.8f, 0.8f};
 
     private TouchController touchController;
     private SceneLoader mScene;
@@ -111,7 +117,7 @@ public class ModelActivity extends Activity implements EventListener {
         try {
             Log.i("ModelActivity", "Loading GLSurfaceView...");
             setContentView(R.layout.activity_model);
-            mGLView = findViewById(R.id.id_glsurface_view)  ;
+            mGLView = findViewById(R.id.id_glsurface_view);
             mGLView.setInitTODO(this, backgroundColor, this.mScene);
 //            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
             mGLView.addListener(this);
@@ -169,7 +175,7 @@ public class ModelActivity extends Activity implements EventListener {
 
         setupOnSystemVisibilityChangeListener();
 
-        // load menu_item_model
+        // load menu_item
         mScene.init();
         mScene.setLightOff();
         
@@ -189,7 +195,7 @@ public class ModelActivity extends Activity implements EventListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_item_model, menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 

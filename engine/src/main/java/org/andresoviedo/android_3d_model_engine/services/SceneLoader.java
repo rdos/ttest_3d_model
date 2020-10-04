@@ -138,11 +138,11 @@ public class SceneLoader implements LoadListener, EventListener {
      */
     private boolean mDrawLighting = true;
     /**
-     * Animate menu_item_model (dae only) or not
+     * Animate menu_item (dae only) or not
      */
     private boolean doAnimation = true;
     /**
-     * Animate menu_item_model (dae only) or not
+     * Animate menu_item (dae only) or not
      */
     private boolean isSmooth = false;
     /**
@@ -182,16 +182,16 @@ public class SceneLoader implements LoadListener, EventListener {
      */
     private Animator animator = new Animator();
     /**
-     * Did the user touched the menu_item_model for the first time?
+     * Did the user touched the menu_item for the first time?
      */
     private boolean userHasInteracted;
     /**
-     * time when menu_item_model loading has started (for stats)
+     * time when menu_item loading has started (for stats)
      */
     private long startTime;
 
     /**
-     * A cache to save original menu_item_model dimensions before rescaling them to fit in screen
+     * A cache to save original menu_item dimensions before rescaling them to fit in screen
      * This enables rescaling several times
      */
     private Map<Object3DData, Dimensions> originalDimensions = new HashMap<>();
@@ -214,7 +214,7 @@ public class SceneLoader implements LoadListener, EventListener {
             return;
         }
 
-        Log.i("SceneLoader", "Loading menu_item_model " + uri + ". async and parallel..");
+        Log.i("SceneLoader", "Loading menu_item " + uri + ". async and parallel..");
         if (uri.toString().toLowerCase().endsWith(".obj") || type == 0) {
             new WavefrontLoaderTask(parent, uri, this).execute();
         } else if (uri.toString().toLowerCase().endsWith(".stl") || type == 1) {
@@ -683,7 +683,7 @@ public class SceneLoader implements LoadListener, EventListener {
     @Override
     public void onLoadError(Exception ex) {
         Log.e("SceneLoader", ex.getMessage(), ex);
-        makeToastText("There was a problem building the menu_item_model: " + ex.getMessage(), Toast.LENGTH_LONG);
+        makeToastText("There was a problem building the menu_item: " + ex.getMessage(), Toast.LENGTH_LONG);
         ContentUtils.setThreadActivity(null);
     }
 
@@ -872,18 +872,18 @@ public class SceneLoader implements LoadListener, EventListener {
             float localScaleY = scaleFactor * original.getScale()[1];
             float localScaleZ = scaleFactor * original.getScale()[2];
             data.setScale(new float[]{localScaleX, localScaleY, localScaleZ});
-            Log.v("SceneLoader", "Mew menu_item_model scale: " + Arrays.toString(data.getScale()));
+            Log.v("SceneLoader", "Mew menu_item scale: " + Arrays.toString(data.getScale()));
 
             // relocate
             float localTranlactionX = original.getLocation()[0] * scaleFactor;
             float localTranlactionY = original.getLocation()[1] * scaleFactor;
             float localTranlactionZ = original.getLocation()[2] * scaleFactor;
             data.setLocation(new float[]{localTranlactionX, localTranlactionY, localTranlactionZ});
-            Log.v("SceneLoader", "Mew menu_item_model location: " + Arrays.toString(data.getLocation()));
+            Log.v("SceneLoader", "Mew menu_item location: " + Arrays.toString(data.getLocation()));
 
             // center
             data.translate(globalDifference);
-            Log.v("SceneLoader", "Mew menu_item_model translated: " + Arrays.toString(data.getLocation()));
+            Log.v("SceneLoader", "Mew menu_item translated: " + Arrays.toString(data.getLocation()));
         }
 
 

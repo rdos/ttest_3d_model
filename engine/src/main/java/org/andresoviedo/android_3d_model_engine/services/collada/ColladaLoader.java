@@ -357,12 +357,12 @@ public final class ColladaLoader {
 
             // log event
             if (ret.isEmpty()){
-                Log.e("ColladaLoaderTask","Mesh data list empty. Did you exclude any menu_item_model in GeometryLoader.java?");
+                Log.e("ColladaLoaderTask","Mesh data list empty. Did you exclude any menu_item in GeometryLoader.java?");
             }
-            Log.i("ColladaLoaderTask","Loading menu_item_model finished. Objects: "+ret.size());
+            Log.i("ColladaLoaderTask","Loading menu_item finished. Objects: "+ret.size());
 
         }catch(Exception ex){
-            Log.e("ColladaLoaderTask","Problem loading menu_item_model",ex);
+            Log.e("ColladaLoaderTask","Problem loading menu_item",ex);
         }
         return ret;
     }

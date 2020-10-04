@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Loads the mesh data for a menu_item_model from a collada XML file.
+ * Loads the mesh data for a menu_item from a collada XML file.
  *
  * @author andresoviedo
  */
@@ -58,7 +58,7 @@ public class GeometryLoader {
         String geometryId = geometry.getAttribute("id");
         String geometryName = geometry.getAttribute("name");
 
-        // INFO: this if is only to debug large complex menu_item_model
+        // INFO: this if is only to debug large complex menu_item
         if (!includeGeometries.isEmpty() && !includeGeometries.contains(geometryId)
                 && !includeGeometries.contains(geometryName)) {
             Log.d("GeometryLoader", "Geometry ignored: " + geometryId);

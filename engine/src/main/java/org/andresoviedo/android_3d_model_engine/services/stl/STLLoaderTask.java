@@ -40,8 +40,8 @@ public final class STLLoaderTask extends LoaderTask {
         try {
 
             // log event
-            Log.i("STLLoaderTask", "Parsing menu_item_model...");
-            super.publishProgress("Parsing menu_item_model...");
+            Log.i("STLLoaderTask", "Parsing menu_item...");
+            super.publishProgress("Parsing menu_item...");
 
             // Parse STL
             this.stlFileReader = new STLFileReader(new URL(uri.toString()));
@@ -78,7 +78,7 @@ public final class STLLoaderTask extends LoaderTask {
             }
 
             // log event
-            Log.i("STLLoaderTask", "Loaded menu_item_model. Facets: " + counter + ", vertices:" +vertices.size()+", normals: "+normals.size());
+            Log.i("STLLoaderTask", "Loaded menu_item. Facets: " + counter + ", vertices:" +vertices.size()+", normals: "+normals.size());
 
             // build data
             final MeshData mesh = new MeshData.Builder().vertices(vertices).normals(normals).build();

@@ -13,9 +13,9 @@ import java.nio.IntBuffer;
 
 /**
  * This class represents an entity in the world that can be animated. It
- * contains the menu_item_model's VAO which contains the mesh data, the texture, and the
+ * contains the menu_item's VAO which contains the mesh data, the texture, and the
  * root joint of the joint hierarchy, or "skeleton". It also holds an int which
- * represents the number of joints that the menu_item_model's skeleton contains, and has
+ * represents the number of joints that the menu_item's skeleton contains, and has
  * its own {@link org.andresoviedo.android_3d_model_engine.animation.Animator} instance which can be used to apply animations to
  * this entity.
  *
@@ -128,12 +128,12 @@ public class AnimatedModel extends Object3DData {
     }
 
     /**
-     * Gets an array of the all important menu_item_model-space transforms of all the
+     * Gets an array of the all important menu_item-space transforms of all the
      * joints (with the current animation pose applied) in the entity. The
      * joints are ordered in the array based on their joint index. The position
      * of each joint's transform in the array is equal to the joint's index.
      *
-     * @return The array of menu_item_model-space transforms of the joints in the current
+     * @return The array of menu_item-space transforms of the joints in the current
      * animation pose.
      */
     public float[][] getJointTransforms() {
@@ -149,7 +149,7 @@ public class AnimatedModel extends Object3DData {
 
     public Dimensions getCurrentDimensions() {
 
-        // FIXME: dimensions when menu_item_model is animated are different. what we can do ??
+        // FIXME: dimensions when menu_item is animated are different. what we can do ??
         if (true) return super.getCurrentDimensions();
 
         if (this.currentDimensions == null) {

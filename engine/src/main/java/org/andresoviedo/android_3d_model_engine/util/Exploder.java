@@ -67,7 +67,7 @@ public class Exploder {
         Log.i("Object3DData",
                 "Exploding '" + object3DData.getId() + "' to '" + xc + "," + yc + "," + zc + "' '" + scaleFactor + "'");
 
-        // modify the menu_item_model's vertices
+        // modify the menu_item's vertices
         FloatBuffer vertexBufferNew = IOUtils.createFloatBuffer(vertexBuffer.capacity());
         for (int i = 0; i < vertexBuffer.capacity(); i += 3) {
             float x = vertexBuffer.get(i);

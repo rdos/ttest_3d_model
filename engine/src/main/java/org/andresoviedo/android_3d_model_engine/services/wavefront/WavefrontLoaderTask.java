@@ -27,7 +27,7 @@ public class WavefrontLoaderTask extends LoaderTask {
 
         final WavefrontLoader wfl = new WavefrontLoader(GLES20.GL_TRIANGLE_FAN, this);
 
-        super.publishProgress("Loading menu_item_model...");
+        super.publishProgress("Loading menu_item...");
 
         final List<Object3DData> load = wfl.load(uri);
 

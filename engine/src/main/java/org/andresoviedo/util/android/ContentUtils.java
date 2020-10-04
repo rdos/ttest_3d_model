@@ -26,7 +26,7 @@ import java.util.Map;
 public class ContentUtils {
 
     /**
-     * Documents opened by the user. This list helps finding the relative filenames found in the menu_item_model
+     * Documents opened by the user. This list helps finding the relative filenames found in the menu_item
      */
     private static Map<String, Uri> documentsProvided = new HashMap<>();
 

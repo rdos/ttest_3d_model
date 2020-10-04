@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This object contains all the mesh data for an animated menu_item_model that is to be loaded into the VAO.
+ * This object contains all the mesh data for an animated menu_item that is to be loaded into the VAO.
  * Notice that the buffers returned ignore any index beyond vertices length (colors or textures sometimes are greater than vertex length)
  * Smoothing groups are an alternative to providing explicit vertex normals.
  * If a polygon’s vertices include normal references, those supersede any smoothing group.

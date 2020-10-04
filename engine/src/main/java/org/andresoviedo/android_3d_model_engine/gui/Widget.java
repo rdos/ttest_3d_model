@@ -352,9 +352,9 @@ public abstract class Widget extends Object3DData implements EventListener {
     }
 
     /**
-     * Unproject world coordinates into menu_item_model original coordinates
+     * Unproject world coordinates into menu_item original coordinates
      * @param clickEvent click event
-     * @return original menu_item_model coordinates
+     * @return original menu_item coordinates
      */
     protected float[] unproject(GUI.ClickEvent clickEvent){
         float x = clickEvent.getX();

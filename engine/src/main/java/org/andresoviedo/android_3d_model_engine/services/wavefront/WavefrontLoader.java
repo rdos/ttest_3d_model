@@ -1,18 +1,18 @@
 // WavefrontLoader.java
 // Andrew Davison, February 2007, ad@fivedots.coe.psu.ac.th
 
-/* Load the OBJ menu_item_model from MODEL_DIR, centering and scaling it.
+/* Load the OBJ menu_item from MODEL_DIR, centering and scaling it.
  The scale comes from the sz argument in the constructor, and
- is implemented by changing the vertices of the loaded menu_item_model.
+ is implemented by changing the vertices of the loaded menu_item.
 
- The menu_item_model can have vertices, normals and tex coordinates, and
+ The menu_item can have vertices, normals and tex coordinates, and
  refer to materials in a MTL file.
 
- The OpenGL commands for rendering the menu_item_model are stored in
+ The OpenGL commands for rendering the menu_item are stored in
  a display list (modelDispList), which is drawn by calls to
  draw().
 
- Information about the menu_item_model is printed to stdout.
+ Information about the menu_item is printed to stdout.
 
  Based on techniques used in the OBJ loading code in the
  JautOGL multiplayer racing game by Evangelos Pournaras 
@@ -95,14 +95,14 @@ public class WavefrontLoader {
         try {
 
             // log event
-            Log.i("WavefrontLoader", "Loading menu_item_model... " + modelURI.toString());
+            Log.i("WavefrontLoader", "Loading menu_item... " + modelURI.toString());
 
             // log event
             Log.i("WavefrontLoader", "--------------------------------------------------");
             Log.i("WavefrontLoader", "Parsing geometries... ");
             Log.i("WavefrontLoader", "--------------------------------------------------");
 
-            // open stream, parse menu_item_model, then close stream
+            // open stream, parse menu_item, then close stream
             final InputStream is = modelURI.toURL().openStream();
             final List<MeshData> meshes = loadModel(modelURI.toString(), is);
             is.close();
@@ -141,7 +141,7 @@ public class WavefrontLoader {
                 data3D.setDrawUsingArrays(false);
                 data3D.setDrawMode(GLES20.GL_TRIANGLES);
 
-                // add menu_item_model to scene
+                // add menu_item to scene
                 callback.onLoad(data3D);
 
                 // notify listener
@@ -235,14 +235,14 @@ public class WavefrontLoader {
     private List<MeshData> loadModel(String id, InputStream is) {
 
         // log event
-        Log.i("WavefrontLoader", "Loading menu_item_model... " + id);
+        Log.i("WavefrontLoader", "Loading menu_item... " + id);
 
         // String fnm = MODEL_DIR + modelNm + ".obj";
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(is));
 
-            // debug menu_item_model purposes
+            // debug menu_item purposes
             int lineNum = 0;
             String line = null;
 

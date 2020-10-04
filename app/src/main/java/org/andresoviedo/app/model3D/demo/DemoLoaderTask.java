@@ -25,10 +25,10 @@ import java.util.List;
 public class DemoLoaderTask extends LoaderTask {
 
     /**
-     * Build a new progress dialog for loading the data menu_item_model asynchronously
+     * Build a new progress dialog for loading the data menu_item asynchronously
      *
      * @param parent parent activity
-     * @param uri      the URL pointing to the 3d menu_item_model
+     * @param uri      the URL pointing to the 3d menu_item
      * @param callback listener
      */
     public DemoLoaderTask(Activity parent, URI uri, LoadListener callback) {

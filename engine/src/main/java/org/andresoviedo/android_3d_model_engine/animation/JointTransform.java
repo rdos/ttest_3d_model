@@ -11,7 +11,7 @@ import java.util.Arrays;
 /**
  * Represents the local bone-space transform of a joint at a certain keyframe
  * during an animation. This includes the position and rotation of the joint,
- * relative to the parent joint (for the root joint it's relative to the menu_item_model's
+ * relative to the parent joint (for the root joint it's relative to the menu_item's
  * origin, seeing as the root joint has no parent). The transform is stored as a
  * position vector and a quaternion (rotation) so that these values can be
  * easily interpolated, a functionality that this class also provides.

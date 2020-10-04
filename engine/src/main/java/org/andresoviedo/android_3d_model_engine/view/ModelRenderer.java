@@ -181,7 +181,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
     private boolean animationEnabled = true;
 
     /**
-     * Whether the info of the menu_item_model has been written to console log
+     * Whether the info of the menu_item has been written to console log
      */
     private Map<String, Boolean> infoLogged = new HashMap<>();
     /**
@@ -495,7 +495,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             }
 
             if (!infoLogged.containsKey(objData.getId())) {
-                Log.i("ModelRenderer", "Drawing menu_item_model: " + objData.getId() + ", " + objData.getClass().getSimpleName());
+                Log.i("ModelRenderer", "Drawing menu_item: " + objData.getId() + ", " + objData.getClass().getSimpleName());
                 infoLogged.put(objData.getId(), true);
             }
 
@@ -574,12 +574,12 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 if (drawWireframe && objData.getDrawMode() != GLES20.GL_POINTS
                         && objData.getDrawMode() != GLES20.GL_LINES && objData.getDrawMode() != GLES20.GL_LINE_STRIP
                         && objData.getDrawMode() != GLES20.GL_LINE_LOOP) {
-                    // Log.d("ModelRenderer","Drawing wireframe menu_item_model...");
+                    // Log.d("ModelRenderer","Drawing wireframe menu_item...");
                     try {
                         // Only draw wireframes for objects having faces (triangles)
                         Object3DData wireframe = wireframes.get(objData);
                         if (wireframe == null || changed) {
-                            Log.i("ModelRenderer", "Building wireframe menu_item_model...");
+                            Log.i("ModelRenderer", "Building wireframe menu_item...");
                             wireframe = Wireframe.build(objData);
                             wireframe.setColor(objData.getColor());
                             wireframes.put(objData, wireframe);

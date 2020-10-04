@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 /**
- * Contains the extracted data for a single joint in the menu_item_model. This stores the
+ * Contains the extracted data for a single joint in the menu_item. This stores the
  * joint's index, name, and local bind transform.
  * 
  * @author andresoviedo

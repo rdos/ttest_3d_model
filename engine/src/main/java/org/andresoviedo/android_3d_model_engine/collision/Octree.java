@@ -20,7 +20,7 @@ import java.util.List;
 public class Octree {
 
     // The minimum size of the 3D space for individual boxes
-    // if the menu_item_model is 100 size, then 10 for boxes is OK
+    // if the menu_item is 100 size, then 10 for boxes is OK
     public static final double BOX_SIZE = 10;
 
     final BoundingBox boundingBox;
