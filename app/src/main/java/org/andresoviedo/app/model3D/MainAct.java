@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -411,8 +410,11 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
                 view = getLayoutInflater().inflate(R.layout.act_main_lv_item, parent, false);
             }
 
-            TextView tv = view.findViewById(R.id.tv_act_main_lv_item);
-            tv.setText(mSceneLoader.getSelectedObject().getId());
+            TextView tvId = view.findViewById(R.id.tv_act_main_lv_item_id);
+            tvId.setText(mSceneLoader.getSelectedObject().getId());
+
+            TextView tvColor = view.findViewById(R.id.tv_act_main_lv_item_color);
+            tvColor.setText(mSceneLoader.getSelectedObject().getColorName());
 //            Product p = getProduct(position);
 //
 //            // заполняем View в пункте списка данными из товаров: наименование, цена

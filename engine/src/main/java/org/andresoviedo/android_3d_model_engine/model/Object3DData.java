@@ -422,6 +422,19 @@ public class Object3DData {
         return this.setColor(mObject3DDataColor.getColorArray());
     }
 
+    private static final String TEXT_FMT_COLOR= "Цвет %s ";
+
+    public String getColorName() {
+        String result = "Error";
+        if (mObject3DDataColor == null) {
+            return result;
+        }
+        result = mObject3DDataColor.getColorName();
+
+        return String.format(TEXT_FMT_COLOR, result);
+    }
+
+
     public int getDrawMode() {
         return drawMode;
     }

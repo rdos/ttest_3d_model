@@ -28,7 +28,7 @@ public class DemoLoaderTask extends LoaderTask {
         ContentUtils.provideAssets(parent);
     }
 
-    private static final String TEXT_FMT_OBJECT_3D_DATA_ID = "Грань номер %s";
+    private static final String TEXT_FMT_OBJECT_3D_DATA_ID = "%sя грань";
 
     @Override
     protected List<Object3DData> build() throws Exception {
