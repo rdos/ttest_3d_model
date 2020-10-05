@@ -102,8 +102,6 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
     private static float EYE_DISTANCE = 0.64f;
     private static final float[] COLOR_RED = {1.0f, 0.0f, 0.0f, 1f};
     private static final float[] COLOR_BLUE = {0.0f, 1.0f, 0.0f, 1f};
-    private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
-    private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
 
     private final float[] backgroundColor;
     private final SceneLoader mScene;

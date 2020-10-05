@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
 
 public class Object3DDataColor {
 
-    private static final float[] COLOR_RED_DEFAULT = {1.0f, 0.0f, 0.0f, 1f};
+    private static final float[] COLOR_DEFAULT = {0.1f, 0.5f, 0.9f, 1f};
+    private static final float[] COLOR_RED= {1.0f, 0.0f, 0.0f, 1f};
     private static final float[] COLOR_GREEN = {0.0f, 1.0f, 0.0f, 1f};
     private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
     private static final float[] COLOR_BLACK = {0f, 0f, 0f, 1f};
@@ -21,7 +22,7 @@ public class Object3DDataColor {
     }
 
     private float[] getColorArray(ColorEnum colorEnum) {
-        float[] result = COLOR_RED_DEFAULT;
+        float[] result = COLOR_DEFAULT;
         switch (colorEnum) {
             case BLUE:
                 result = COLOR_BLUE;
@@ -35,6 +36,12 @@ public class Object3DDataColor {
             case YELLOW:
                 result = COLOR_YELLOW;
                 break;
+            case BLACK:
+                result = COLOR_BLACK;
+                break;
+//            case RED:
+//                result = COLOR_RED;
+//                break;
         }
         return result;
     }
@@ -50,7 +57,7 @@ public class Object3DDataColor {
 
 
     public enum ColorEnum {
-        BLUE, GREEN, WHITE, YELLOW, RED;
+        BLUE, GREEN, WHITE, YELLOW, BLACK, RED;
 
         @NonNull
         @Override
@@ -58,7 +65,7 @@ public class Object3DDataColor {
             String result = "Ошибка";
             switch (this) {
                 case BLUE:
-                    result = "Голубой";
+                    result = "Синий";
                     break;
                 case GREEN:
                     result = "Зеленый";
@@ -69,6 +76,12 @@ public class Object3DDataColor {
                 case YELLOW:
                     result = "Жёлтый";
                     break;
+                case BLACK:
+                    result = "Чёрный";
+                    break;
+//                case RED:
+//                    result = "Красный";
+//                    break;
             }
             return result;
         }

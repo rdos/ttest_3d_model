@@ -85,7 +85,7 @@ public class DemoLoaderTask extends LoaderTask {
 
             // more test to check right position
             Object3DData obj113 = Cube.buildCubeV1();
-            obj113.setColor(Object3DDataColor.ColorEnum.BLUE);
+            obj113.setColor(Object3DDataColor.ColorEnum.BLACK);
             obj113.setLocation(new float[] { -1f, 0f, 0.5f });
             obj113.setScale(0.5f, 0f, 0.5f);
             obj113.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "3"));
@@ -93,7 +93,7 @@ public class DemoLoaderTask extends LoaderTask {
 
             // more test to check right position
             Object3DData obj114 = Cube.buildCubeV1();
-            obj114.setColor(Object3DDataColor.ColorEnum.GREEN);
+            obj114.setColor(Object3DDataColor.ColorEnum.WHITE);
             obj114.setLocation(new float[] { -1.5f, 0.5f, 0.5f });
             obj114.setScale(0f, 0.5f, 0.5f);
             obj114.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "4"));
@@ -110,7 +110,7 @@ public class DemoLoaderTask extends LoaderTask {
 
             // more test to check right position
             Object3DData obj116 = Cube.buildCubeV1();
-            obj116.setColor(Object3DDataColor.ColorEnum.GREEN);
+            obj116.setColor(Object3DDataColor.ColorEnum.RED);
             obj116.setLocation(new float[] { -1f, 0.5f, 1f });
             obj116.setScale(0.5f, 0.5f, 0f);
             obj116.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "6"));
