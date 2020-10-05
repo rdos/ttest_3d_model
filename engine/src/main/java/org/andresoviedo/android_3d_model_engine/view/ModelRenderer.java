@@ -103,6 +103,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
     private static final float[] COLOR_RED = {1.0f, 0.0f, 0.0f, 1f};
     private static final float[] COLOR_BLUE = {0.0f, 1.0f, 0.0f, 1f};
     private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
+    private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
 
     private final float[] backgroundColor;
     private final SceneLoader scene;
@@ -665,7 +666,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
         if (boundingBoxData == null || changed) {
             Log.i("ModelRenderer", "Building bounding box... id: " + objData.getId());
             boundingBoxData = BoundingBox.build(objData);
-            boundingBoxData.setColor(COLOR_WHITE);
+            boundingBoxData.setColor(COLOR_RED);
             boundingBoxes.put(objData, boundingBoxData);
             Log.i("ModelRenderer", "Bounding box: " + boundingBoxData);
         }

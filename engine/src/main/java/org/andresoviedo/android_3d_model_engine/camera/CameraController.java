@@ -11,12 +11,12 @@ import java.util.EventObject;
 
 public final class CameraController implements EventListener {
     static private String TAG = "CameraController";
-    private final Camera camera;
+    private final Camera mCamera;
     private int width;
     private int height;
 
     public CameraController(Camera camera) {
-        this.camera = camera;
+        mCamera = camera;
     }
 
     //TODO: R!??
@@ -39,17 +39,17 @@ public final class CameraController implements EventListener {
                     Log.v("CameraController", "Translating camera (dx,dy) '" + dx1 + "','" + dy1 + "'...");
                     dx1 = (float) (dx1 / max * Math.PI * 2);
                     dy1 = (float) (dy1 / max * Math.PI * 2);
-                    camera.translateCamera(dx1, dy1);
+                    mCamera.translateCamera(dx1, dy1);
                     break;
                 case PINCH:
                     float zoomFactor = ((TouchEvent) event).getZoom() / 10;
                     Log.v("CameraController", "Zooming '" + zoomFactor + "'...");
-                    camera.MoveCameraZ(zoomFactor);
+                    mCamera.MoveCameraZ(zoomFactor);
                     break;
                 case SPREAD:
                     float[] rotation = touchEvent.getRotation();
                     Log.v("CameraController", "Rotating camera '" + Math.signum(rotation[2]) + "'...");
-                    camera.Rotate((float) (Math.signum(rotation[2]) / Math.PI) / 4);
+                    mCamera.Rotate((float) (Math.signum(rotation[2]) / Math.PI) / 4);
                     break;
             }
         }

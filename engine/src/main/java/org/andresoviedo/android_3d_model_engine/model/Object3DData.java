@@ -22,9 +22,9 @@ import java.util.EventObject;
 import java.util.List;
 
 /**
- * This is the basic 3D data necessary to build the 3D object
+ * Add Color ???
  *
- * @author andresoviedo
+ *
  */
 public class Object3DData {
 

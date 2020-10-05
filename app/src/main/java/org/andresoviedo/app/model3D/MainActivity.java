@@ -28,6 +28,12 @@ import java.net.URI;
 import java.net.URL;
 import java.util.EventObject;
 
+/**
+    private static final float[] COLOR_RED = {1.0f, 0.0f, 0.0f, 1f};
+    private static final float[] COLOR_BLUE = {0.0f, 1.0f, 0.0f, 1f};
+    private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
+    private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
+ */
 public class MainActivity extends Activity implements EventListener {
     private ModelSurfaceView mGLView;
 

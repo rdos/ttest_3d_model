@@ -172,7 +172,7 @@ public class SceneLoader implements LoadListener, EventListener {
     /**
      * Object selected by the user
      */
-    private Object3DData selectedObject = null;
+    private Object3DData mSelectedObject = null;
     /**
      * Light bulb 3d data
      */
@@ -688,11 +688,11 @@ public class SceneLoader implements LoadListener, EventListener {
     }
 
     public Object3DData getSelectedObject() {
-        return selectedObject;
+        return mSelectedObject;
     }
 
     private void setSelectedObject(Object3DData selectedObject) {
-        this.selectedObject = selectedObject;
+        mSelectedObject = selectedObject;
     }
 
     public void loadTexture(Object3DData obj, Uri uri) throws IOException {
