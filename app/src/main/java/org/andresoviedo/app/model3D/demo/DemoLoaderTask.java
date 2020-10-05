@@ -1,23 +1,15 @@
 package org.andresoviedo.app.model3D.demo;
 
 import android.app.Activity;
-import android.opengl.GLES20;
 import android.util.Log;
 
 import org.andresoviedo.android_3d_model_engine.model.Object3DData;
+import org.andresoviedo.android_3d_model_engine.model.Object3DDataColor;
 import org.andresoviedo.android_3d_model_engine.objects.Cube;
 import org.andresoviedo.android_3d_model_engine.services.LoadListener;
-import org.andresoviedo.android_3d_model_engine.services.LoadListenerAdapter;
 import org.andresoviedo.android_3d_model_engine.services.LoaderTask;
-import org.andresoviedo.android_3d_model_engine.services.SceneLoader;
-import org.andresoviedo.android_3d_model_engine.services.collada.ColladaLoader;
-import org.andresoviedo.android_3d_model_engine.services.wavefront.WavefrontLoader;
-import org.andresoviedo.android_3d_model_engine.util.Exploder;
-import org.andresoviedo.android_3d_model_engine.util.Rescaler;
 import org.andresoviedo.util.android.ContentUtils;
-import org.andresoviedo.util.io.IOUtils;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +27,8 @@ public class DemoLoaderTask extends LoaderTask {
         super(parent, uri, callback);
         ContentUtils.provideAssets(parent);
     }
+
+    private static final String TEXT_FMT_OBJECT_3D_DATA_ID = "Грань номер %s";
 
     @Override
     protected List<Object3DData> build() throws Exception {
@@ -72,48 +66,54 @@ public class DemoLoaderTask extends LoaderTask {
 ////            Rescaler.rescale(obj12, -10f);
 //            super.onLoad(obj12);
 
-            float[] ColorCubeTZ = new float[] { 1f, 1f, 0f, 0.25f };
+//            float[] ColorCubeTZ = new float[] { 1f, 1f, 0f, 0.25f };
             // more test to check right position
             Object3DData obj111 = Cube.buildCubeV1();
-            obj111.setColor(ColorCubeTZ);
+            obj111.setColor(Object3DDataColor.ColorEnum.BLUE);
             obj111.setLocation(new float[] { -0.5f, 0.5f, 0.5f });
             obj111.setScale(0f, 0.5f, 0.5f);
+            obj111.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "1"));
             super.onLoad(obj111);
 
             // more test to check right position
             Object3DData obj112 = Cube.buildCubeV1();
-            obj112.setColor(ColorCubeTZ);
+            obj112.setColor(Object3DDataColor.ColorEnum.GREEN);
             obj112.setLocation(new float[] { -1f, 1f, 0.5f });
             obj112.setScale(0.5f, 0f, 0.5f);
+            obj112.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "2"));
             super.onLoad(obj112);
 
             // more test to check right position
             Object3DData obj113 = Cube.buildCubeV1();
-            obj113.setColor(ColorCubeTZ);
+            obj113.setColor(Object3DDataColor.ColorEnum.BLUE);
             obj113.setLocation(new float[] { -1f, 0f, 0.5f });
             obj113.setScale(0.5f, 0f, 0.5f);
+            obj113.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "3"));
             super.onLoad(obj113);
 
             // more test to check right position
             Object3DData obj114 = Cube.buildCubeV1();
-            obj114.setColor(ColorCubeTZ);
+            obj114.setColor(Object3DDataColor.ColorEnum.GREEN);
             obj114.setLocation(new float[] { -1.5f, 0.5f, 0.5f });
             obj114.setScale(0f, 0.5f, 0.5f);
+            obj114.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "4"));
             super.onLoad(obj114);
 
 //
             // more test to check right position
             Object3DData obj115 = Cube.buildCubeV1();
-            obj115.setColor(ColorCubeTZ);
+            obj115.setColor(Object3DDataColor.ColorEnum.YELLOW);
             obj115.setLocation(new float[] { -1f, 0.5f, 0f });
             obj115.setScale(0.5f, 0.5f, 0f);
+            obj115.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "5"));
             super.onLoad(obj115);
 
             // more test to check right position
             Object3DData obj116 = Cube.buildCubeV1();
-            obj116.setColor(ColorCubeTZ);
+            obj116.setColor(Object3DDataColor.ColorEnum.GREEN);
             obj116.setLocation(new float[] { -1f, 0.5f, 1f });
             obj116.setScale(0.5f, 0.5f, 0f);
+            obj116.setId(String.format(TEXT_FMT_OBJECT_3D_DATA_ID, "6"));
             super.onLoad(obj116);
 
 

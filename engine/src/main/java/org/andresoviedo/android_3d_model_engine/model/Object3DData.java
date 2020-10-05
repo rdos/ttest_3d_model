@@ -29,6 +29,8 @@ import java.util.List;
 public class Object3DData {
 
 
+    private Object3DDataColor mObject3DDataColor;
+
     protected static class ChangeEvent extends EventObject {
         ChangeEvent(Object source) {
             super(source);
@@ -411,6 +413,13 @@ public class Object3DData {
             this.getMaterial().setAlpha(color[3]);
         }
         return this;
+    }
+
+    public Object3DData setColor(Object3DDataColor.ColorEnum colorEnum) {
+//        Object3DDataColor.build(colorEnum);
+        //TODO:!!!
+        mObject3DDataColor = new Object3DDataColor(colorEnum);
+        return this.setColor(mObject3DDataColor.getColorArray());
     }
 
     public int getDrawMode() {

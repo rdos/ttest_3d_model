@@ -9,7 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.andresoviedo.android_3d_model_engine.camera.CameraController;
@@ -31,15 +36,13 @@ import java.net.URI;
 import java.net.URL;
 import java.util.EventObject;
 
-/**
-    private static final float[] COLOR_RED = {1.0f, 0.0f, 0.0f, 1f};
-    private static final float[] COLOR_BLUE = {0.0f, 1.0f, 0.0f, 1f};
-    private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
-    private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
- */
+
 public class MainAct extends Activity implements EventListener, SelectObjectListener {
     private ModelSurfaceView mGLView;
     private LinearLayout llMainAct;
+    private ListView lvMainAct;
+    private SelectObject3DAdapter mSelectObject3DAdapter;
+
     private static final int REQUEST_CODE_LOAD_TEXTURE = 1000;
     private static final int FULLSCREEN_DELAY = 10000;
 
@@ -122,6 +125,9 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
 
             llMainAct = findViewById(R.id.ll_main_act);
             llMainAct.setVisibility(View.GONE);
+
+            lvMainAct = findViewById(R.id.lv_main_act);
+
             mGLView = findViewById(R.id.id_glsurface_view);
             mGLView.setInitTODO(this, backgroundColor, this.mSceneLoader);
 //            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
@@ -183,7 +189,9 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
         // load menu_item
         mSceneLoader.init();
         mSceneLoader.setLightOff();
-        
+
+        mSelectObject3DAdapter = new SelectObject3DAdapter(mSceneLoader);
+        lvMainAct.setAdapter(mSelectObject3DAdapter);
         Log.i("ModelActivity", "Finished loading");
     }
 
@@ -370,7 +378,58 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
             return false;
         }
         llMainAct.setVisibility(View.VISIBLE);
+        mSelectObject3DAdapter.notifyDataSetChanged();
         return false;
+    }
+
+    private class SelectObject3DAdapter extends BaseAdapter {
+        final private SceneLoader mSceneLoader;
+        public SelectObject3DAdapter(SceneLoader sceneLoader) {
+            mSceneLoader = sceneLoader;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mSceneLoader.getSelectedObject();
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View convertView, ViewGroup parent) {
+            // используем созданные, но не используемые view
+            View view = convertView;
+            if (view == null) {
+                view = getLayoutInflater().inflate(R.layout.act_main_lv_item, parent, false);
+            }
+
+            TextView tv = view.findViewById(R.id.tv_act_main_lv_item);
+            tv.setText(mSceneLoader.getSelectedObject().getId());
+//            Product p = getProduct(position);
+//
+//            // заполняем View в пункте списка данными из товаров: наименование, цена
+//            // и картинка
+//            ((TextView) view.findViewById(R.id.tvDescr)).setText(p.name);
+//            ((TextView) view.findViewById(R.id.tvPrice)).setText(p.price + "");
+//            ((ImageView) view.findViewById(R.id.ivImage)).setImageResource(p.image);
+//
+//            CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
+//            // присваиваем чекбоксу обработчик
+//            cbBuy.setOnCheckedChangeListener(myCheckChangeList);
+//            // пишем позицию
+//            cbBuy.setTag(position);
+//            // заполняем данными из товаров: в корзине или нет
+//            cbBuy.setChecked(p.box);
+            return view;
+        }
     }
 }
 
