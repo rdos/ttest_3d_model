@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme" android:largeHeap="true"
         android:requestLegacyExternalStorage="true">
         <activity
-            android:name="org.andresoviedo.app.model3D.MainActivity"
+            android:name="org.andresoviedo.app.model3D.MainAct"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
         <activity
             android:name="org.andresoviedo.util.view.TextActivity"
             android:label="@string/title_activity_text"
-            android:parentActivityName="org.andresoviedo.app.model3D.MainActivity" >
+            android:parentActivityName="org.andresoviedo.app.model3D.MainAct" >
         </activity>
     </application>
 

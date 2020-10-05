@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.andresoviedo.android_3d_model_engine.camera.CameraController;
 import org.andresoviedo.android_3d_model_engine.collision.CollisionController;
 import org.andresoviedo.android_3d_model_engine.controller.TouchController;
+import org.andresoviedo.android_3d_model_engine.model.Object3DData;
 import org.andresoviedo.android_3d_model_engine.services.LoaderTask;
 import org.andresoviedo.android_3d_model_engine.services.SceneLoader;
 import org.andresoviedo.android_3d_model_engine.view.ModelRenderer;
@@ -23,6 +25,7 @@ import org.andresoviedo.app.model3D.view.ModelViewerGUI;
 import org.andresoviedo.dddmodel2.R;
 import org.andresoviedo.util.android.AndroidURLStreamHandlerFactory;
 import org.andresoviedo.util.event.EventListener;
+import org.andresoviedo.util.event.SelectObjectListener;
 
 import java.net.URI;
 import java.net.URL;
@@ -34,9 +37,9 @@ import java.util.EventObject;
     private static final float[] COLOR_WHITE = {1f, 1f, 1f, 1f};
     private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
  */
-public class MainActivity extends Activity implements EventListener {
+public class MainAct extends Activity implements EventListener, SelectObjectListener {
     private ModelSurfaceView mGLView;
-
+    private LinearLayout llMainAct;
     private static final int REQUEST_CODE_LOAD_TEXTURE = 1000;
     private static final int FULLSCREEN_DELAY = 10000;
 
@@ -65,7 +68,7 @@ public class MainActivity extends Activity implements EventListener {
     private float[] backgroundColor = new float[]{0.8f, 0.8f, 0.8f, 0.8f};
 
     private TouchController touchController;
-    private SceneLoader mScene;
+    private SceneLoader mSceneLoader;
     private ModelViewerGUI gui;
     private CollisionController collisionController;
 
@@ -107,28 +110,24 @@ public class MainActivity extends Activity implements EventListener {
 
         // Create our 3D scenario
         Log.i("ModelActivity", "Loading Scene...");
-        mScene = new SceneLoader(this, paramUri, paramType, mGLView);
+        mSceneLoader = new SceneLoader(this, paramUri, paramType, mGLView, this::onSelectObject);
         if (paramUri == null) {
-            final LoaderTask task = new DemoLoaderTask(this, null, mScene);
+            final LoaderTask task = new DemoLoaderTask(this, null, mSceneLoader);
             task.execute();
         }
 
-/*        Log.i("ModelActivity","Loading Scene...");
-        if (paramUri == null) {
-            scene = new ExampleSceneLoader(this);
-        } else {
-            scene = new SceneLoader(this, paramUri, paramType, gLView);
-        }*/
-
         try {
             Log.i("ModelActivity", "Loading GLSurfaceView...");
-            setContentView(R.layout.activity_model);
+            setContentView(R.layout.act_main);
+
+            llMainAct = findViewById(R.id.ll_main_act);
+            llMainAct.setVisibility(View.GONE);
             mGLView = findViewById(R.id.id_glsurface_view);
-            mGLView.setInitTODO(this, backgroundColor, this.mScene);
+            mGLView.setInitTODO(this, backgroundColor, this.mSceneLoader);
 //            gLView = new ModelSurfaceView(this, backgroundColor, this.scene);
             mGLView.addListener(this);
 
-            mScene.setView(mGLView);
+            mSceneLoader.setView(mGLView);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading OpenGL view:\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -145,10 +144,10 @@ public class MainActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CollisionController...");
-            collisionController = new CollisionController(mGLView, mScene);
-            collisionController.addListener(mScene);
+            collisionController = new CollisionController(mGLView, mSceneLoader);
+            collisionController.addListener(mSceneLoader);
             touchController.addListener(collisionController);
-            touchController.addListener(mScene);
+            touchController.addListener(mSceneLoader);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading CollisionController\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -156,7 +155,7 @@ public class MainActivity extends Activity implements EventListener {
 
         try {
             Log.i("ModelActivity", "Loading CameraController...");
-            mCameraController = new CameraController(mScene.getCamera());
+            mCameraController = new CameraController(mSceneLoader.getCamera());
             mGLView.getModelRenderer().addListener(mCameraController);
             touchController.addListener(mCameraController);
         } catch (Exception e) {
@@ -167,10 +166,10 @@ public class MainActivity extends Activity implements EventListener {
         try {
             // TODO: finish UI implementation
             Log.i("ModelActivity", "Loading GUI...");
-            gui = new ModelViewerGUI(mGLView, mScene);
+            gui = new ModelViewerGUI(mGLView, mSceneLoader);
             touchController.addListener(gui);
             mGLView.addListener(gui);
-            mScene.addGUIObject(gui);
+            mSceneLoader.addGUIObject(gui);
         } catch (Exception e) {
             Log.e("ModelActivity", e.getMessage(), e);
             Toast.makeText(this, "Error loading GUI" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -182,8 +181,8 @@ public class MainActivity extends Activity implements EventListener {
         setupOnSystemVisibilityChangeListener();
 
         // load menu_item
-        mScene.init();
-        mScene.setLightOff();
+        mSceneLoader.init();
+        mSceneLoader.setLightOff();
         
         Log.i("ModelActivity", "Finished loading");
     }
@@ -232,10 +231,10 @@ public class MainActivity extends Activity implements EventListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.model_toggle_wireframe:
-                mScene.toggleWireframe();
+                mSceneLoader.toggleWireframe();
                 break;
             case R.id.model_toggle_boundingbox:
-                mScene.toggleBoundingBox();
+                mSceneLoader.toggleBoundingBox();
                 break;
 //            case R.id.model_toggle_textures:
 //                mScene.toggleTextures();
@@ -362,6 +361,16 @@ public class MainActivity extends Activity implements EventListener {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean onSelectObject(Object3DData object3DData) {
+        if (object3DData == null) {
+            llMainAct.setVisibility(View.GONE);
+            return false;
+        }
+        llMainAct.setVisibility(View.VISIBLE);
+        return false;
     }
 }
 

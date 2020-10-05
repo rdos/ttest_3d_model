@@ -106,7 +106,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
     private static final float[] COLOR_BLACK = {0f, 0f, 0f, 0f};
 
     private final float[] backgroundColor;
-    private final SceneLoader scene;
+    private final SceneLoader mScene;
 
     private final List<EventListener> listeners = new ArrayList<>();
 
@@ -208,7 +208,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                          float[] backgroundColor, SceneLoader scene) throws IOException, IllegalAccessException {
         this.main = modelSurfaceView;
         this.backgroundColor = backgroundColor;
-        this.scene = scene;
+        this.mScene = scene;
         this.drawer = new RendererFactory(parent);
     }
 
@@ -301,17 +301,17 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             // Draw background color
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-            if (scene == null) {
+            if (mScene == null) {
                 // scene not ready
                 return;
             }
 
             float[] colorMask = BLENDING_MASK_DEFAULT;
-            if (scene.isBlendingEnabled()) {
+            if (mScene.isBlendingEnabled()) {
                 // Enable blending for combining colors when there is transparency
                 GLES20.glEnable(GLES20.GL_BLEND);
                 GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-                if (scene.isBlendingForced()) {
+                if (mScene.isBlendingForced()) {
                     colorMask = BLENDING_MASK_FORCED;
                 }
             } else {
@@ -319,10 +319,10 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             }
 
             // animate scene
-            scene.onDrawFrame();
+            mScene.onDrawFrame();
 
             // recalculate mvp matrix according to where we are looking at now
-            Camera camera = scene.getCamera();
+            Camera camera = mScene.getCamera();
             cameraPosInWorldSpace[0] = camera.xPos;
             cameraPosInWorldSpace[1] = camera.yPos;
             cameraPosInWorldSpace[2] = camera.zPos;
@@ -334,7 +334,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 float ratio = (float) width / height;
                 // Log.v(TAG, "Camera changed: projection: [" + -ratio + "," + ratio + ",-1,1]-near/far[1,10], ");
 
-                if (!scene.isStereoscopic()) {
+                if (!mScene.isStereoscopic()) {
                     Matrix.setLookAtM(viewMatrix, 0, camera.xPos, camera.yPos, camera.zPos, camera.xView, camera.yView,
                             camera.zView, camera.xUp, camera.yUp, camera.zUp);
                     Matrix.multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
@@ -352,10 +352,10 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                                     .xView,
                             rightCamera.yView, rightCamera.zView, rightCamera.xUp, rightCamera.yUp, rightCamera.zUp);
 
-                    if (scene.isAnaglyph()) {
+                    if (mScene.isAnaglyph()) {
                         Matrix.frustumM(projectionMatrixRight, 0, -ratio, ratio, -1, 1, getNear(), getFar());
                         Matrix.frustumM(projectionMatrixLeft, 0, -ratio, ratio, -1, 1, getNear(), getFar());
-                    } else if (scene.isVRGlasses()) {
+                    } else if (mScene.isVRGlasses()) {
                         float ratio2 = (float) width / 2 / height;
                         Matrix.frustumM(projectionMatrixRight, 0, -ratio2, ratio2, -1, 1, getNear(), getFar());
                         Matrix.frustumM(projectionMatrixLeft, 0, -ratio2, ratio2, -1, 1, getNear(), getFar());
@@ -371,13 +371,13 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             }
 
 
-            if (!scene.isStereoscopic()) {
+            if (!mScene.isStereoscopic()) {
                 this.onDrawFrame(viewMatrix, projectionMatrix, viewProjectionMatrix, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
                 return;
             }
 
 
-            if (scene.isAnaglyph()) {
+            if (mScene.isAnaglyph()) {
                 // INFO: switch because blending algorithm doesn't mix colors
                 if (anaglyphSwitch) {
                     this.onDrawFrame(viewMatrixLeft, projectionMatrixLeft, viewProjectionMatrixLeft, lightPosInWorldSpace,
@@ -390,7 +390,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 return;
             }
 
-            if (scene.isVRGlasses()) {
+            if (mScene.isVRGlasses()) {
 
                 // draw left eye image
                 GLES20.glViewport(0, 0, width / 2, height);
@@ -420,11 +420,11 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
 
         // draw light
         //TODO: R???
-        boolean doAnimation = scene.isDoAnimation() && animationEnabled;
-        boolean drawLighting = scene.isDrawLighting() && isLightsEnabled();
-        boolean drawWireframe = scene.isDrawWireframe() || wireframeEnabled;
-        boolean drawTextures = scene.isDrawTextures() && texturesEnabled;
-        boolean drawColors = scene.isDrawColors() && colorsEnabled;
+        boolean doAnimation = mScene.isDoAnimation() && animationEnabled;
+        boolean drawLighting = mScene.isDrawLighting() && isLightsEnabled();
+        boolean drawWireframe = mScene.isDrawWireframe() || wireframeEnabled;
+        boolean drawTextures = mScene.isDrawTextures() && texturesEnabled;
+        boolean drawColors = mScene.isDrawColors() && colorsEnabled;
 
         if (drawLighting) {
 
@@ -432,14 +432,14 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
 
             //TODO: R???
             // Calculate position of the light in world space to support lighting
-            if (scene.isRotatingLight()) {
-                Matrix.multiplyMV(tempVector4, 0, scene.getLightBulb().getModelMatrix(), 0, lightPosition, 0);
+            if (mScene.isRotatingLight()) {
+                Matrix.multiplyMV(tempVector4, 0, mScene.getLightBulb().getModelMatrix(), 0, lightPosition, 0);
                 lightPosInWorldSpace[0] = tempVector4[0];
                 lightPosInWorldSpace[1] = tempVector4[1];
                 lightPosInWorldSpace[2] = tempVector4[2];
 
                 // Draw a point that represents the light bulb
-                basicShader.draw(scene.getLightBulb(), projectionMatrix, viewMatrix, -1, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
+                basicShader.draw(mScene.getLightBulb(), projectionMatrix, viewMatrix, -1, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
                 //basicShader.draw(Point.build(lightPosInWorldSpace), projectionMatrix, viewMatrix, -1, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
             } else {
                 lightPosInWorldSpace[0] = cameraPosInWorldSpace[0];
@@ -448,7 +448,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             }
 
             // FIXME: memory leak
-            if (scene.isDrawNormals()) {
+            if (mScene.isDrawNormals()) {
                 basicShader.draw(Line.build(new float[]{lightPosInWorldSpace[0],
                                 lightPosInWorldSpace[1], lightPosInWorldSpace[2], 0, 0, 0}).setId("light_line"), projectionMatrix,
                         viewMatrix, -1,
@@ -458,13 +458,13 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
         }
 
         // draw all available objects
-        List<Object3DData> objects = scene.getObjects();
+        List<Object3DData> objects = mScene.getObjects();
         for (int i = 0; i < objects.size(); i++) {
             drawObject(viewMatrix, projectionMatrix, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace, doAnimation, drawLighting, drawWireframe, drawTextures, drawColors, objects, i);
         }
 
         // draw all GUI objects
-        List<Object3DData> guiObjects = scene.getGUIObjects();
+        List<Object3DData> guiObjects = mScene.getGUIObjects();
         for (int i = 0; i < guiObjects.size(); i++) {
             drawObject(viewMatrix, projectionMatrix, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace, doAnimation, drawLighting, drawWireframe, drawTextures, drawColors, guiObjects, i);
         }
@@ -586,7 +586,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                             wireframes.put(objData, wireframe);
                             Log.i("ModelRenderer", "Wireframe build: "+wireframe);
                         }
-                        animator.update(wireframe, scene.isShowBindPose());
+                        animator.update(wireframe, mScene.isShowBindPose());
                         drawerObject.draw(wireframe, projectionMatrix, viewMatrix, wireframe.getDrawMode(), wireframe.getDrawSize(), textureId, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
                         //objData.render(drawer, lightPosInWorldSpace, colorMask);
                     } catch (Error e) {
@@ -595,7 +595,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 }
 
                 // draw points
-                else if (scene.isDrawPoints()) {
+                else if (mScene.isDrawPoints()) {
                     drawerObject.draw(objData, projectionMatrix, viewMatrix
                             , GLES20.GL_POINTS, objData.getDrawSize(),
                             textureId, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
@@ -603,14 +603,14 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 }
 
                 // draw skeleton
-                else if (scene.isDrawSkeleton() && objData instanceof AnimatedModel && ((AnimatedModel) objData)
+                else if (mScene.isDrawSkeleton() && objData instanceof AnimatedModel && ((AnimatedModel) objData)
                         .getAnimation() != null) {
                     Object3DData skeleton = this.skeleton.get(objData);
                     if (skeleton == null || changed) {
                         skeleton = Skeleton.build((AnimatedModel) objData);
                         this.skeleton.put(objData, skeleton);
                     }
-                    animator.update(skeleton, scene.isShowBindPose());
+                    animator.update(skeleton, mScene.isShowBindPose());
                     drawerObject = drawer.getDrawer(skeleton, false, drawLighting, doAnimation, drawColors);
                     drawerObject.draw(skeleton, projectionMatrix, viewMatrix, -1, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace);
                 }
@@ -630,12 +630,12 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
             }
 
             // Draw bounding box
-            if (scene.isDrawBoundingBox() && objData.isSolid() || scene.getSelectedObject() == objData) {
+            if (mScene.isDrawBoundingBox() && objData.isSolid() || mScene.getSelectedObject() == objData) {
                 drawBoundingBox(viewMatrix, projectionMatrix, lightPosInWorldSpace, colorMask, cameraPosInWorldSpace, objData, changed);
             }
 
             // Draw normals
-            if (scene.isDrawNormals()) {
+            if (mScene.isDrawNormals()) {
                 Object3DData normalData = normals.get(objData);
                 if (normalData == null || changed) {
                     normalData = Normals.build(objData);
@@ -648,7 +648,7 @@ public class ModelRenderer implements GLSurfaceView.Renderer {
                 if (normalData != null) {
                     Renderer normalsDrawer = drawer.getDrawer(normalData, false, false, doAnimation,
                             false);
-                    animator.update(normalData, scene.isShowBindPose());
+                    animator.update(normalData, mScene.isShowBindPose());
                     normalsDrawer.draw(normalData, projectionMatrix, viewMatrix, -1, lightPosInWorldSpace,colorMask
                             , cameraPosInWorldSpace);
                 }

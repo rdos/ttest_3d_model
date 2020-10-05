@@ -59,7 +59,6 @@ public class ModelSurfaceView extends GLSurfaceView implements EventListener {
 		}
 	}
 
-
 	public void setTouchController(TouchController touchController){
 		this.touchController = touchController;
 	}

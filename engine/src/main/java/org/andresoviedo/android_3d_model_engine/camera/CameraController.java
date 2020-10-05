@@ -6,12 +6,13 @@ import org.andresoviedo.android_3d_model_engine.controller.TouchEvent;
 import org.andresoviedo.android_3d_model_engine.model.Camera;
 import org.andresoviedo.android_3d_model_engine.view.ModelRenderer;
 import org.andresoviedo.util.event.EventListener;
+import org.andresoviedo.util.event.SelectObjectListener;
 
 import java.util.EventObject;
 
 public final class CameraController implements EventListener {
     static private String TAG = "CameraController";
-    private final Camera mCamera;
+    final private Camera mCamera;
     private int width;
     private int height;
 

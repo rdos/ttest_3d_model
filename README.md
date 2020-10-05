@@ -113,7 +113,7 @@ You can install the application in either of these ways:
     export ANDROID_HOME=/home/$USER/Android/Sdk
     ./gradlew assembleDebug
     adb install -r app/build/outputs/apk/app-debug.apk
-    adb shell am start -n org.andresoviedo.dddmodel2/org.andresoviedo.app.model3D.MainActivity
+    adb shell am start -n org.andresoviedo.dddmodel2/org.andresoviedo.app.model3D.MainAct
 ```
 
 Open the application. You should see a menu. From there you can load models

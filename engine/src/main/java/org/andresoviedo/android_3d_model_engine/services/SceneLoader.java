@@ -24,6 +24,7 @@ import org.andresoviedo.android_3d_model_engine.services.wavefront.WavefrontLoad
 import org.andresoviedo.android_3d_model_engine.view.ModelSurfaceView;
 import org.andresoviedo.util.android.ContentUtils;
 import org.andresoviedo.util.event.EventListener;
+import org.andresoviedo.util.event.SelectObjectListener;
 import org.andresoviedo.util.io.IOUtils;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ import java.util.Map;
  * @author andresoviedo
  */
 public class SceneLoader implements LoadListener, EventListener {
-
+    private static final String TAG = "SceneLoader";
     /**
      * Default max size for dimension on any axis
      */
@@ -63,6 +64,8 @@ public class SceneLoader implements LoadListener, EventListener {
      * Parent component
      */
     protected final Activity parent;
+
+    final private SelectObjectListener mSelectObjectListener;
     /**
      * Model uri
      */
@@ -197,12 +200,13 @@ public class SceneLoader implements LoadListener, EventListener {
     private Map<Object3DData, Dimensions> originalDimensions = new HashMap<>();
     private Map<Object3DData, Transform> originalTransforms = new HashMap<>();
 
-    public SceneLoader(Activity main, URI uri, int type, GLSurfaceView glView) {
+    //TODO: raBно код :(
+    public SceneLoader(Activity main, URI uri, int type, GLSurfaceView glView, SelectObjectListener selectObjectListener) {
         this.parent = main;
         this.uri = uri;
         this.type = type;
         this.glView = glView;
-
+        mSelectObjectListener = selectObjectListener;
         lightBulb.setLocation(new float[]{0, 0, DEFAULT_CAMERA_POSITION});
     }
 
@@ -687,13 +691,18 @@ public class SceneLoader implements LoadListener, EventListener {
         ContentUtils.setThreadActivity(null);
     }
 
+
+
     public Object3DData getSelectedObject() {
         return mSelectedObject;
     }
 
     private void setSelectedObject(Object3DData selectedObject) {
         mSelectedObject = selectedObject;
+        mSelectObjectListener.onSelectObject(selectedObject);
     }
+
+
 
     public void loadTexture(Object3DData obj, Uri uri) throws IOException {
         if (obj == null && objects.size() != 1) {
@@ -716,6 +725,13 @@ public class SceneLoader implements LoadListener, EventListener {
         mRotatingLight = false;
         mDrawLighting = false;
     }
+
+    public final boolean isSelectedObject() {
+        boolean result = this.getSelectedObject() == null;
+        Log.d(TAG, String.format("isSelectedObject: %s", result));
+        return result;
+    }
+
     public void setView(ModelSurfaceView view) {
         this.glView = view;
     }
