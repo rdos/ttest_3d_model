@@ -2,6 +2,7 @@ package org.andresoviedo.app.model3D;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,6 +79,7 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
     private Handler handler;
     //TODO: R!!!
     private CameraController mCameraController;
+    private Drawable mLastMenuIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,8 +242,9 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
             case R.id.model_toggle_wireframe:
                 mSceneLoader.toggleWireframe();
                 break;
-            case R.id.model_toggle_boundingbox:
-                mSceneLoader.toggleBoundingBox();
+            case R.id.menu_item_enable_select:
+                setSelectObjectMode(item);
+//                mSceneLoader.toggleBoundingBox();
                 break;
 //            case R.id.model_toggle_textures:
 //                mScene.toggleTextures();
@@ -285,6 +288,19 @@ public class MainAct extends Activity implements EventListener, SelectObjectList
 
         hideSystemUIDelayed();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setSelectObjectMode(MenuItem item) {
+        if (item.getIcon() == null) {
+            item.setIcon(mLastMenuIcon);
+            mSceneLoader.setSelectedObjectModeOff();
+            llMainAct.setVisibility(View.GONE);
+//            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        } else {
+            mLastMenuIcon =  item.getIcon();
+            item.setIcon(null);
+            mSceneLoader.setSelectedObjectMode();
+        }
     }
 
     //TODO: R??? full screen

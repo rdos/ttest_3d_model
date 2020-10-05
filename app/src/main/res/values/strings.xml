@@ -44,7 +44,7 @@
     <string name="toggle_lights">Toggle lights</string>
     <string name="toggle_animation">Toggle animation</string>
     <!--<string name="toggle_skeleton">Toggle skeleton</string>-->
-    <string name="toggle_boundingbox">Toggle bounding box</string>
+    <string name="toggle_boundingbox">Выделение вкл.</string>
     <string name="load_texture">Load texture</string>
 
     <!-- To review -->

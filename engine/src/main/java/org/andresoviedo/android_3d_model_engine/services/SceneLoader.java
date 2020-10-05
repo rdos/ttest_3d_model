@@ -66,6 +66,7 @@ public class SceneLoader implements LoadListener, EventListener {
     protected final Activity parent;
 
     final private SelectObjectListener mSelectObjectListener;
+
     /**
      * Model uri
      */
@@ -702,6 +703,15 @@ public class SceneLoader implements LoadListener, EventListener {
         mSelectObjectListener.onSelectObject(selectedObject);
     }
 
+    private boolean mIsSelectedObjectModeOff = true;
+
+    public void setSelectedObjectMode() {
+        mIsSelectedObjectModeOff = false;
+    }
+
+    public void setSelectedObjectModeOff() {
+        mIsSelectedObjectModeOff = true;
+    }
 
 
     public void loadTexture(Object3DData obj, Uri uri) throws IOException {
@@ -748,6 +758,10 @@ public class SceneLoader implements LoadListener, EventListener {
             if (isCollision() && point != null) {
                 addObject(point);
             } else {
+                if (mIsSelectedObjectModeOff) {
+                    setSelectedObject(null);
+                    return true;
+                }
                 if (getSelectedObject() == objectToSelect) {
                     Log.i("SceneLoader", "Unselected object " + objectToSelect.getId());
                     Log.d("SceneLoader", "Unselected object " + objectToSelect);
